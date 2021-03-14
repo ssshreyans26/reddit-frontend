@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card } from "react-bootstrap";
+import { Card,Image ,Col} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowCircleUp,
@@ -15,7 +15,7 @@ export default class Dashboard extends Component {
     };
   }
   componentDidMount() {
-    fetch("http://localhost:3005/feed",{  
+    fetch("http://localhost:3000/feed",{  
     mode: 'cors',
     headers: {
       'Access-Control-Allow-Origin':'*'
@@ -36,9 +36,16 @@ export default class Dashboard extends Component {
             
           <Card border="light" bg="dark" text="light">
             <Card.Header as="h3" className="">
-              {post.test.displayName}
               
+              
+{            (post.test.length!==0)
+             
+ ? <Col xs={6} md={6}> <Image src={post.test[0].image} roundedCircle /> {post.test[0].displayName}     </Col> 
+ :  <Col xs={6} md={4}> <Image src="{post.test[0].image}" roundedCircle />    </Col>
+            }
             </Card.Header>
+
+              
             <Card.Body>
               <Card.Title>{post.caption}</Card.Title>
               {/* <Card.Img variant="top" src="{post.Location}" /> */}
