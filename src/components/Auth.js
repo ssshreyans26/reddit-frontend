@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form,Button,Col } from 'react-bootstrap';
-export default function CreatePost() {
+export default function Auth() {
     return (
         <div className="container">
         <Form bg="dark" text="light">

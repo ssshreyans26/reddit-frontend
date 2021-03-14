@@ -4,20 +4,20 @@ export default function CreatePost() {
     return (
         <div className="container">
         <Form bg="dark" text="light">
-            <Form.Row>
+            <Form>
                 <Form.Group as={Col}>
                 <Form.Label>Caption</Form.Label>
-                <Form.Control type="caption" placeholder="Enter Caption" required/>
+                <Form.Control type="String" placeholder="Enter Caption" required/>
                 </Form.Group>
 
                 <Form.Group as={Col}>
-                <Form.Label>Description</Form.Label>
-                <Form.Control type="description" placeholder="Enter Description" />
+                <Form.Label >Description</Form.Label>
+                <Form.Control  as="textarea" rows={3} type="String" placeholder="Enter Description" />
+            <Form.Control className="mb-2" type="file" className="mr-3"/>
                 </Form.Group>
-            </Form.Row>
-            <Button variant="dark" type="" className="mr-3">
-                Upload Image
-            </Button>
+            </Form>
+            
+            
             <Button variant="dark" type="submit">
                 Submit
             </Button>
