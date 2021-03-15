@@ -15,7 +15,7 @@ export default class Dashboard extends Component {
     };
   }
   componentDidMount() {
-    fetch("http://localhost:3000/feed",{  
+    fetch("https://obscure-journey-24994.herokuapp.com/feed",{  
     mode: 'cors',
     headers: {
       'Access-Control-Allow-Origin':'*'
