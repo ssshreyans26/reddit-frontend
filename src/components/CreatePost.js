@@ -10,6 +10,7 @@ export default function CreatePost() {
             "description":description
 
         }
+        console.log(data)
         fetch("http://localhost:3000/upload",{  
           method: 'POST', 
           mode: 'cors',
@@ -29,7 +30,7 @@ export default function CreatePost() {
     return (
         <div className="container">
         <Form bg="dark" text="light">
-            <Form>
+            
                 <Form.Group as={Col}>
                 <Form.Label>Caption</Form.Label>
                 <Form.Control onChange={(e) => setCaption(e.target.value)} type="String" placeholder="Enter Caption" required/>
@@ -38,9 +39,9 @@ export default function CreatePost() {
                 <Form.Group as={Col}>
                 <Form.Label >Description</Form.Label>
                 <Form.Control  onChange={(e) => setDescription(e.target.value)} as="textarea" rows={3} type="String" placeholder="Enter Description" />
-            {/* <Form.Control className="mb-2" type="file" className="mr-3"/> */}
+           
                 </Form.Group>
-            </Form>
+             {/* <Form.Control className="mb-2" type="file" className="mr-3"/> */}
             <Button onClick={() =>{submitFormData(caption,description)}} variant="dark" type="submit">
                 Submit
             </Button>
