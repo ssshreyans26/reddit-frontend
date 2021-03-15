@@ -1,6 +1,31 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Form,Button,Col } from 'react-bootstrap';
 export default function CreatePost() {
+    const [caption, setCaption] = useState("");
+    const [description, setDescription] = useState("");
+    const submitFormData = (caption,description) => {
+        console.log(caption,description);
+        var data = {
+            "caption":caption,
+            "description":description
+
+        }
+        fetch("http://localhost:3000/upload",{  
+          method: 'POST', 
+          mode: 'cors',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'uid':localStorage.getItem('uid')
+        },
+          body: JSON.stringify(data)
+        }).then((result) => {        
+          result.json().then((rel) => {
+              console.log(rel)
+          });
+        });
+        
+      }
     return (
         <div className="container">
         <Form bg="dark" text="light">
@@ -13,11 +38,9 @@ export default function CreatePost() {
                 <Form.Group as={Col}>
                 <Form.Label >Description</Form.Label>
                 <Form.Control  as="textarea" rows={3} type="String" placeholder="Enter Description" />
-            <Form.Control className="mb-2" type="file" className="mr-3"/>
+            {/* <Form.Control className="mb-2" type="file" className="mr-3"/> */}
                 </Form.Group>
             </Form>
-            
-            
             <Button variant="dark" type="submit">
                 Submit
             </Button>
