@@ -42,10 +42,14 @@ export default function GLogin() {
           console.log("don't know where to go")
         }
         console.warn(rel);
+        // return rel;
       });
     });
-      
+    
   }
+  // React.useEffect(() => {
+  //   localStorage.setItem('uid', JSON.stringify(rel.user._id));
+  // });
   const responseErrorGoogle = (response) => {
     console.warn(response);
   }
