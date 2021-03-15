@@ -41,7 +41,7 @@ export default function CreatePost() {
             {/* <Form.Control className="mb-2" type="file" className="mr-3"/> */}
                 </Form.Group>
             </Form>
-            <Button onClick={submitFormData(caption,description)} variant="dark" type="submit">
+            <Button onClick={() =>{submitFormData(caption,description)}} variant="dark" type="submit">
                 Submit
             </Button>
         </Form>
