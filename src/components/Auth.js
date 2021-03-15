@@ -10,7 +10,7 @@ export default function Auth() {
             "dob":dob
 
         }
-        fetch("http://localhost:3000/rel/register",{  
+        fetch("http://localhost:3000/auth/register",{  
           method: 'POST', 
           mode: 'cors',
           headers: {
