@@ -15,8 +15,9 @@ export default function Auth() {
           mode: 'cors',
           headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
+            'Content-Type': 'application/json',
+            'uid':localStorage.getItem('uid')
+        },
           body: JSON.stringify(data)
         }).then((result) => {        
           result.json().then((rel) => {

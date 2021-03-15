@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 
@@ -19,6 +19,7 @@ import { GoogleLogin } from 'react-google-login';
 
 export default function GLogin() {
   const history = useHistory();
+  const [uid, setUid] = useState("");
   const responseSuccessGoogle = (response) => {
     console.log(response);
     fetch("http://localhost:3000/login",{  
@@ -34,7 +35,8 @@ export default function GLogin() {
       result.json().then((rel) => {
         // return  this.props.history.push('/auth/');
         // redirectToAuth();
-
+        setUid(rel.user._id);
+        console.log(uid)
         if(rel.firstLogin===1){
           history.push('/auth');
         }
@@ -47,9 +49,10 @@ export default function GLogin() {
     });
     
   }
-  // React.useEffect(() => {
-  //   localStorage.setItem('uid', JSON.stringify(rel.user._id));
-  // });
+  React.useEffect(() => {
+    localStorage.setItem('uid', JSON.stringify(uid));
+  });
+  
   const responseErrorGoogle = (response) => {
     console.warn(response);
   }
