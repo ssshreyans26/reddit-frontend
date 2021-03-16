@@ -13,8 +13,22 @@ import { useHistory } from 'react-router-dom';
 export default function Dashboard() {
     const history = useHistory()
     const [postDetails, setPostDetails] = useState([]);
+    const [upcolor, setUpColor] = useState("white");
+    const [downcolor, setdownColor] = useState("white");
+    const upStyle = {
+        color:upcolor,
+        "cursor":"pointer",
+    }
+    const downStyle = {
+      color:downcolor,
+      "cursor":"pointer",
+    }
+
     const updateVote = (postId,actions) => {
-      console.log(!localStorage.getItem("uid"))
+      // console.log(localStorage.getItem("uid"))
+      // if(actions==="increment"){
+      //   setUpColor("green")
+      // }
         if (!localStorage.getItem("uid")) {
           //redirect to login page
           history.push("/glogin");
@@ -53,6 +67,7 @@ export default function Dashboard() {
     React.useEffect(() => {
         getPostDetails();
         },[]);
+
 return (
       <div className="container">
         {postDetails.map((post) => (
@@ -83,6 +98,7 @@ return (
                 size="2x"
                 icon={faArrowCircleUp}
                 onClick={() => {updateVote(post._id,"increment")}}
+                style={upStyle}
               />
               <span className="text-center mx-2 mb-2">{post.votes}</span>
               <FontAwesomeIcon
@@ -90,6 +106,7 @@ return (
                 size="2x"
                 icon={faArrowCircleDown}
                 onClick={() => {updateVote(post._id,"decrement")}}
+                style={downStyle}
               />
               <FontAwesomeIcon
                 
