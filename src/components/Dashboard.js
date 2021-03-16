@@ -39,7 +39,8 @@ export default function Dashboard() {
             mode: 'cors',
             headers: {
               'Accept': 'application/json',
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'uid':localStorage.getItem('uid')
             },
             body: JSON.stringify({"actions":actions})
           }).then((result) => {
