@@ -44,12 +44,28 @@ export default function Dashboard() {
             body: JSON.stringify({"actions":actions})
           }).then((result) => {
             result.json().then((rel) => {
+              getPostDetails();
+              // update icon to green/red
+              //upadte the number (basically set state again)
             });
           });
-          // update icon to green/red
-          //upadte the number (basically set state again)
         }
       };
+
+      const addComment = (postId) => {
+        // console.log(localStorage.getItem("uid"))
+        // if(actions==="increment"){
+        //   setUpColor("green")
+        // }
+          if (!localStorage.getItem("uid")) {
+            //redirect to login page
+            history.push("/glogin");
+        
+          } else {
+            //redirect to singlepost page
+
+          }
+        };
     const getPostDetails = () => {
       fetch("https://obscure-journey-24994.herokuapp.com/feed", {
         mode: "cors",
