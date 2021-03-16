@@ -14,16 +14,31 @@ export default class Dashboard extends Component {
       postDetails: [],
       uid: localStorage.getItem("uid"),
     };
-    const updateVote = () => {
-      if (!localStorage.getItem("uid")) {
-        //redirect to login page
-      } else {
-        //api call
-        // update icon to green/red
-        //upadte the number (basically set state again)
-      }
-    };
+}
+ updateVote = (postId,actions) => {
+      
+  if (!localStorage.getItem("uid")) {
+    //redirect to login page
+    this.context.router.history.push("/glogin");
+
+  } else {
+    fetch("http://localhost:3000/votePosts/:"+ postId,{  
+      method: 'POST', 
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"actions":actions})
+    }).then((result) => {
+      result.json().then((rel) => {
+      });
+    });
+    // update icon to green/red
+    //upadte the number (basically set state again)
   }
+};
+
   componentDidMount() {
     fetch("https://obscure-journey-24994.herokuapp.com/feed", {
       mode: "cors",
@@ -70,17 +85,17 @@ export default class Dashboard extends Component {
                 className="mr-1"
                 size="2x"
                 icon={faArrowCircleUp}
-                onClick={this.updateVote}
+                onClick={this.updateVote(post._id,"increment")}
               />
               <span className="text-center mx-2 mb-2">{post.votes}</span>
               <FontAwesomeIcon
                 className="mr-1"
                 size="2x"
                 icon={faArrowCircleDown}
-                onClick={this.updateVote}
+                onClick={this.updateVote(post._id,"decrement")}
               />
               <FontAwesomeIcon
-                onClick={/*redirect to single post page*/}
+                
                 className="ml-0"
                 size="2x"
                 icon={faCommentDots}
