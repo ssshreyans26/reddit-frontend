@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from 'react'
 import { Card, Image, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,59 +6,56 @@ import {
   faArrowCircleDown,
   faCommentDots,
 } from "@fortawesome/free-solid-svg-icons";
+import { useHistory } from 'react-router-dom';
 
-export default class Dashboard extends Component {
-  constructor() {
-    super();
-    this.state = {
-      postDetails: [],
-      uid: localStorage.getItem("uid"),
-    };
-}
- updateVote = (postId,actions) => {
+
+
+export default function Dashboard() {
+    const history = useHistory()
+    const [postDetails, setPostDetails] = useState([]);
+    const updateVote = (postId,actions) => {
+      console.log(!localStorage.getItem("uid"))
+        if (!localStorage.getItem("uid")) {
+          //redirect to login page
+          history.push("/glogin");
       
-  if (!localStorage.getItem("uid")) {
-    //redirect to login page
-    this.context.router.history.push("/glogin");
-
-  } else {
-    fetch("http://localhost:3000/votePosts/:"+ postId,{  
-      method: 'POST', 
-      mode: 'cors',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({"actions":actions})
-    }).then((result) => {
-      result.json().then((rel) => {
-      });
-    });
-    // update icon to green/red
-    //upadte the number (basically set state again)
-  }
-};
-
-  componentDidMount() {
-    fetch("https://obscure-journey-24994.herokuapp.com/feed", {
-      mode: "cors",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-    }).then((response) => {
-      console.warn(response);
-      response.json().then((result) => {
-        this.setState({
-          postDetails: result,
+        } else {
+          fetch("http://localhost:3000/votePosts/"+ postId,{  
+            method: 'POST', 
+            mode: 'cors',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"actions":actions})
+          }).then((result) => {
+            result.json().then((rel) => {
+            });
+          });
+          // update icon to green/red
+          //upadte the number (basically set state again)
+        }
+      };
+    const getPostDetails = () => {
+      fetch("https://obscure-journey-24994.herokuapp.com/feed", {
+        mode: "cors",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      }).then((response) => {
+        console.warn(response);
+        response.json().then((result) => {
+            setPostDetails(result)
+            console.log(postDetails)
         });
-        console.warn(this.state.postDetails);
       });
-    });
-  }
-  render() {
-    return (
+    }
+    React.useEffect(() => {
+        getPostDetails();
+        },[]);
+return (
       <div className="container">
-        {this.state.postDetails.map((post) => (
+        {postDetails.map((post) => (
           <Card border="light" bg="dark" text="light">
             <Card.Header as="h3" className="">
               {post.test.length !== 0 ? (
@@ -85,14 +82,14 @@ export default class Dashboard extends Component {
                 className="mr-1"
                 size="2x"
                 icon={faArrowCircleUp}
-                onClick={this.updateVote(post._id,"increment")}
+                onClick={() => {updateVote(post._id,"increment")}}
               />
               <span className="text-center mx-2 mb-2">{post.votes}</span>
               <FontAwesomeIcon
                 className="mr-1"
                 size="2x"
                 icon={faArrowCircleDown}
-                onClick={this.updateVote(post._id,"decrement")}
+                onClick={() => {updateVote(post._id,"decrement")}}
               />
               <FontAwesomeIcon
                 
@@ -107,6 +104,5 @@ export default class Dashboard extends Component {
           </Card>
         ))}
       </div>
-    );
-  }
+    )
 }
