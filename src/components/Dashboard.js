@@ -23,6 +23,34 @@ export default function Dashboard() {
       color:downcolor,
       "cursor":"pointer",
     }
+    
+    const getPostState = () => {
+      if(!localStorage.getItem("uid")){
+        history.push("/glogin");
+      }
+      else {
+        fetch("http://localhost:3000/poststate",{  
+            method: 'GET', 
+            mode: 'cors',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'uid':localStorage.getItem('uid')
+            },
+          }).then((result) => {
+            // console.warn("you are here")
+            console.log({result})
+            // postDetails.map((post) => {
+
+            // })
+            // result.json().then((rel) => {
+            //   // update icon to green/red
+            //   //upadte the number (basically set state again)
+            // });
+          });
+        }
+      }
+    
 
     const updateVote = (postId,actions) => {
       // console.log(localStorage.getItem("uid"))
@@ -44,11 +72,13 @@ export default function Dashboard() {
             },
             body: JSON.stringify({"actions":actions})
           }).then((result) => {
-            result.json().then((rel) => {
-              getPostDetails();
-              // update icon to green/red
-              //upadte the number (basically set state again)
-            });
+            console.warn("you are here")
+            console.log({result})
+            getPostDetails();
+            // result.json().then((rel) => {
+            //   // update icon to green/red
+            //   //upadte the number (basically set state again)
+            // });
           });
         }
       };
@@ -60,15 +90,26 @@ export default function Dashboard() {
         // }
           if (!localStorage.getItem("uid")) {
             //redirect to login page
-            history.push("/glogin");
+            history.push({ 
+            pathname:  "/glogin",
+            state: {
+              nextapiref: '/singlepost',
+              postID:'postID' 
+            } });
         
           } else {
             //redirect to singlepost page
+            history.push({
+              pathname:  "/singlepost",
+              state: {
+                postID: "postid"  
+              } 
+            })
 
           }
         };
     const getPostDetails = () => {
-      fetch("https://obscure-journey-24994.herokuapp.com/feed", {
+     fetch("https://obscure-journey-24994.herokuapp.com/feed", {
         mode: "cors",
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -88,6 +129,7 @@ export default function Dashboard() {
 return (
       <div className="container">
         {postDetails.map((post) => (
+
           <Card border="light" bg="dark" text="light">
             <Card.Header as="h3" className="">
               {post.test.length !== 0 ? (
@@ -109,7 +151,7 @@ return (
               {/* <Card.Img variant="top" src="{post.Location}" /> */}
               <Card.Text>{post.desc}</Card.Text>
               {/* <Button variant="light">Go somewhere</Button> */}
-
+                
               <FontAwesomeIcon
                 className="mr-1"
                 size="2x"
