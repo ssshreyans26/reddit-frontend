@@ -111,9 +111,11 @@ export default function Dashboard() {
     const getPostDetails = () => {
      fetch("https://obscure-journey-24994.herokuapp.com/feed", {
         mode: "cors",
+        method:"GET",
         headers: {
           "Access-Control-Allow-Origin": "*",
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
       }).then((response) => {
         console.warn(response);
