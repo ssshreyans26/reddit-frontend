@@ -113,6 +113,7 @@ export default function Dashboard() {
         mode: "cors",
         headers: {
           "Access-Control-Allow-Origin": "*",
+          'Content-Type': 'application/json',
         },
       }).then((response) => {
         console.warn(response);
