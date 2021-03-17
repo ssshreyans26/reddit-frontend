@@ -86,7 +86,7 @@ export default function Dashboard() {
         }
       };
 
-      const addComments = (postId) => {
+      const addComments = (post) => {
           if (!localStorage.getItem("uid")) {
             //redirect to login page
             history.push({ 
@@ -101,7 +101,7 @@ export default function Dashboard() {
             history.push({
               pathname:  "/singlepost",
               state: {
-                "post_id": postId  
+                "post": post 
               } 
             })
 
@@ -192,7 +192,7 @@ return (
                 size="2x"
                 icon={faCommentDots}
                 style={{cursor:"pointer"}}
-                onClick={() => {addComments(post._id)}}
+                onClick={() => {addComments(post)}}
               />
             </Card.Body>
             <Card.Footer className="text-muted text-center">

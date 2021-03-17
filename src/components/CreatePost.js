@@ -20,7 +20,7 @@ export default function CreatePost() {
         var formData = new FormData();
         formData.append("caption",caption)
         formData.append("description",description)
-        formData.append("image",reader.readAsDataURL(image))
+        formData.append("image",image)
         var uid = localStorage.getItem('uid')
         fetch("http://localhost:3000/upload",{  
           method: 'POST', 
@@ -29,10 +29,10 @@ export default function CreatePost() {
             'Accept': 'application/json',
             // "Access-Control-Allow-Origin": "*",
           // 'Content-Type': 'application/json',
-            'Content-Type': 'application-x-www-form-urlencoded',
+            // 'Content-Type': 'application-x-www-form-urlencoded',
             'uid': uid
         },
-          body: data
+          body: formData
         }).then((result) => {        
           result.json().then((rel) => {
               console.log(rel)
