@@ -102,20 +102,28 @@ export default function Dashboard() {
             history.push({
               pathname:  "/singlepost",
               state: {
-                postID: "postid"  
+                "postID": postId  
               } 
             })
 
           }
         };
     const getPostDetails = () => {
-     fetch("https://obscure-journey-24994.herokuapp.com/feed", {
+    var uid;
+      if(localStorage.getItem('uid')){
+      uid = localStorage.getItem('uid')
+    }
+    else {
+      uid = null;
+    }
+     fetch("http://localhost:3000/feed", {
         mode: "cors",
         method:"GET",
         headers: {
           "Access-Control-Allow-Origin": "*",
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'uid':uid
         },
       }).then((response) => {
         console.warn(response);
