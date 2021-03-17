@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
+import Header from './Header';
 
 // const gLogin = () => {
   //     // fetch("http://localhost:3000/auth/google",{  
@@ -9,15 +10,14 @@ import { GoogleLogin } from 'react-google-login';
 //     //   'Access-Control-Allow-Origin':'*'
 //     // }}).then((response) => {
 //     //   console.warn(response);
-//     //   response.json().then((result) => {
-  
+//     //   response.json().then((result) => {  
 //     //     console.warn(this.state.postDetails);
 //     //   });
 //     // });
 //   };
 
 
-export default function GLogin() {
+export default function GLogin(props) {
   const history = useHistory();
   const [uid, setUid] = useState("");
   const responseSuccessGoogle = (response) => {
@@ -41,7 +41,13 @@ export default function GLogin() {
           history.push('/auth');
         }
         else{
-          console.log("don't know where to go")
+          if(props.history.location.state){
+
+            history.push(props.history.location.state.api)
+          }
+          else{
+            history.push('/')
+          }
         }
         console.warn(rel);
         // return rel;
@@ -57,6 +63,7 @@ export default function GLogin() {
     console.warn(response);
   }
   return (
+    
     <div class="col-md-3">
   <GoogleLogin
     clientId="143507902217-1tlo2o3f38t402n736r1hbnk8j2da655.apps.googleusercontent.com"

@@ -1,25 +1,32 @@
 import React,{useState} from 'react'
 import { Form,Button,Col } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 export default function CreatePost() {
+    const history = useHistory()
     const [caption, setCaption] = useState("");
     const [description, setDescription] = useState("");
-    const submitFormData = (caption,description) => {
-        console.log(caption,description);
+    const [image, setImage] = useState();
+    const submitFormData = (caption,description,image) => {
+        console.log(caption,description,image);
         var data = {
             "caption":caption,
-            "description":description
+            "description":description,
+            "image":image
 
         }
         console.log(data)
-        fetch("http://localhost:3000/upload",{  
+        var uid = localStorage.getItem('uid')
+        fetch("https://obscure-journey-24994.herokuapp.com/upload",{  
           method: 'POST', 
           mode: 'cors',
           headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'uid':localStorage.getItem('uid')
+            "Access-Control-Allow-Origin": "*",
+          // 'Content-Type': 'application/json',
+            'Content-type': 'multipart/form-data',
+            'uid': uid
         },
-          body: JSON.stringify(data)
+          body: data
         }).then((result) => {        
           result.json().then((rel) => {
               console.log(rel)
@@ -27,6 +34,15 @@ export default function CreatePost() {
         });
         
       }
+      React.useEffect(() => {
+        if(!localStorage.getItem('uid')){
+          history.push({ 
+            pathname:  "/glogin",
+            state: {
+              api: '/createpost', 
+            } });
+        }
+      });
     return (
         <div className="container">
         <Form bg="dark" text="light">
@@ -41,8 +57,8 @@ export default function CreatePost() {
                 <Form.Control  onChange={(e) => setDescription(e.target.value)} as="textarea" rows={3} type="String" placeholder="Enter Description" />
            
                 </Form.Group>
-             {/* <Form.Control className="mb-2" type="file" className="mr-3"/> */}
-            <Button onClick={() =>{submitFormData(caption,description)}} variant="dark" type="submit">
+             <Form.Control className="mb-2 mr-3" type="file" onChange={(e) => setImage(e.target.files[0])} />
+            <Button onClick={() =>{submitFormData(caption,description,image)}} variant="dark">
                 Submit
             </Button>
         </Form>

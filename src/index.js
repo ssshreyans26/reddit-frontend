@@ -3,11 +3,28 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
+import Dashboard from "./components/Dashboard";
+import CreatePost from "./components/CreatePost";
+import GLogin from "./components/GLogin"
+import Auth from './components/Auth'
+import SinglePost from './components/SinglePost'
+import Header from './components/Header';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+  <Router>
+  <Header/>
+      <Switch>
+      <Route exact={true} path="/" component={Dashboard}/>
+      <Route path="/singlepost" component={SinglePost}/>
+      <Route path="/auth" component={Auth}/>
+      <Route path="/glogin" component={GLogin}/>
+      <Route path="/createpost" component={CreatePost}/>
+        
+      </Switch>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

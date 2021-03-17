@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 
 
 
+
 export default function Dashboard() {
     const history = useHistory()
     const [postDetails, setPostDetails] = useState([]);
@@ -91,7 +92,7 @@ export default function Dashboard() {
             history.push({ 
             pathname:  "/glogin",
             state: {
-              nextapiref: '/singlepost',
+              api: '/singlepost',
               postID:'postID' 
             } });
         
@@ -107,7 +108,7 @@ export default function Dashboard() {
           }
         };
     const getPostDetails = () => {
-    var uid =localStorage.getItem('uid');
+    var uid = localStorage.getItem('uid');
      console.log("uid",uid) 
     fetch("http://localhost:3000/feed", {
         mode: "cors",
@@ -122,7 +123,7 @@ export default function Dashboard() {
         console.warn(response);
         response.json().then((result) => {
             console.warn(result)
-            if(uid!=="\"\""){
+            if(uid!=="\"\"" || uid=="null" || uid==null){
               setVotes(result.pop())  
               console.log("votes",votes)
               
@@ -137,7 +138,8 @@ export default function Dashboard() {
         },[]);
 
 return (
-      <div className="container">
+      <div className="">
+     
         {postDetails.map((post) => (
 
   
@@ -160,7 +162,7 @@ return (
 
             <Card.Body>
               <Card.Title>{post.caption}</Card.Title>
-              {/* <Card.Img variant="top" src="{post.Location}" /> */}
+              <Card.Img variant="top" src={post.Location} />
               <Card.Text>{post.desc}</Card.Text>
               {/* <Button variant="light">Go somewhere</Button> */}
               
