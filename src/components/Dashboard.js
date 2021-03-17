@@ -15,14 +15,16 @@ export default function Dashboard() {
     const [postDetails, setPostDetails] = useState([]);
     const [upcolor, setUpColor] = useState("white");
     const [downcolor, setdownColor] = useState("white");
-    const upStyle = {
-        color:upcolor,
-        "cursor":"pointer",
-    }
-    const downStyle = {
-      color:downcolor,
-      "cursor":"pointer",
-    }
+    const [votes,setVotes] = useState({})
+    // const []
+    // const upStyle = {
+    //     color:upcolor,
+    //     "cursor":"pointer",
+    // }
+    // const downStyle = {
+    //   color:downcolor,
+    //   "cursor":"pointer",
+    // }
     
     const getPostState = () => {
       if(!localStorage.getItem("uid")){
@@ -83,11 +85,7 @@ export default function Dashboard() {
         }
       };
 
-      const addComment = (postId) => {
-        // console.log(localStorage.getItem("uid"))
-        // if(actions==="increment"){
-        //   setUpColor("green")
-        // }
+      const addComments = (postId) => {
           if (!localStorage.getItem("uid")) {
             //redirect to login page
             history.push({ 
@@ -102,21 +100,16 @@ export default function Dashboard() {
             history.push({
               pathname:  "/singlepost",
               state: {
-                "postID": postId  
+                "post_id": postId  
               } 
             })
 
           }
         };
     const getPostDetails = () => {
-    var uid;
-      if(localStorage.getItem('uid')){
-      uid = localStorage.getItem('uid')
-    }
-    else {
-      uid = null;
-    }
-     fetch("http://localhost:3000/feed", {
+    var uid =localStorage.getItem('uid');
+     console.log("uid",uid) 
+    fetch("http://localhost:3000/feed", {
         mode: "cors",
         method:"GET",
         headers: {
@@ -128,6 +121,12 @@ export default function Dashboard() {
       }).then((response) => {
         console.warn(response);
         response.json().then((result) => {
+            console.warn(result)
+            if(uid!=="\"\""){
+              setVotes(result.pop())  
+              console.log("votes",votes)
+              
+            }
             setPostDetails(result)
             console.log(postDetails)
         });
@@ -140,6 +139,8 @@ export default function Dashboard() {
 return (
       <div className="container">
         {postDetails.map((post) => (
+
+  
 
           <Card border="light" bg="dark" text="light">
             <Card.Header as="h3" className="">
@@ -162,13 +163,16 @@ return (
               {/* <Card.Img variant="top" src="{post.Location}" /> */}
               <Card.Text>{post.desc}</Card.Text>
               {/* <Button variant="light">Go somewhere</Button> */}
-                
+              
               <FontAwesomeIcon
                 className="mr-1"
                 size="2x"
                 icon={faArrowCircleUp}
                 onClick={() => {updateVote(post._id,"increment")}}
-                style={upStyle}
+                style={{cursor:"pointer",color:(votes[post._id]===1)
+    ?"green"
+    :"white"   
+  }}
               />
               <span className="text-center mx-2 mb-2">{post.votes}</span>
               <FontAwesomeIcon
@@ -176,13 +180,17 @@ return (
                 size="2x"
                 icon={faArrowCircleDown}
                 onClick={() => {updateVote(post._id,"decrement")}}
-                style={downStyle}
+                style={{cursor:"pointer",color:(votes[post._id]===-1)
+    ?"red"
+    :"white"}}
               />
               <FontAwesomeIcon
                 
                 className="ml-0"
                 size="2x"
                 icon={faCommentDots}
+                style={{cursor:"pointer"}}
+                onClick={() => {addComments(post._id)}}
               />
             </Card.Body>
             <Card.Footer className="text-muted text-center">
@@ -193,3 +201,5 @@ return (
       </div>
     )
 }
+
+
