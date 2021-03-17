@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
+import {Jumbotron} from 'react-bootstrap';
 import Header from './Header';
 
 // const gLogin = () => {
@@ -65,6 +66,7 @@ export default function GLogin(props) {
   return (
     
     <div class="col-md-3">
+    <Jumbotron>
   <GoogleLogin
     clientId="143507902217-1tlo2o3f38t402n736r1hbnk8j2da655.apps.googleusercontent.com"
     buttonText="Login"
@@ -72,6 +74,7 @@ export default function GLogin(props) {
     onFailure={responseErrorGoogle}
     cookiePolicy={'single_host_origin'}
   />
+  </Jumbotron>
   </div>
     )
 }

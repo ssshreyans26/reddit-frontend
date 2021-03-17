@@ -8,6 +8,7 @@ export default function CreatePost() {
     const [image, setImage] = useState();
     const submitFormData = (caption,description,image) => {
         console.log(caption,description,image);
+
         var formData = new FormData();
         formData.append("caption",caption)
         formData.append("description",description)
@@ -38,7 +39,7 @@ export default function CreatePost() {
         }
       });
     return (
-        <div className="container">
+        <div className="container" bg="antiquewhite">
         <Form bg="dark" text="light" enctype="multipart/form-data">
             
                 <Form.Group as={Col}>

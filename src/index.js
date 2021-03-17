@@ -17,7 +17,7 @@ ReactDOM.render(
   <Router>
   <Header/>
       <Switch>
-      <Route exact={true} path="/" component={Dashboard}/>
+      <Route exact path="/" component={Dashboard}/>
       <Route path="/singlepost" component={SinglePost}/>
       <Route path="/auth" component={Auth}/>
       <Route path="/glogin" component={GLogin}/>

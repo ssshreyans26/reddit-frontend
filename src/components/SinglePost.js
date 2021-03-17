@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Image, Col } from "react-bootstrap";
+import { Card, Image, Col,Media } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowCircleUp,
@@ -10,20 +10,21 @@ import { useHistory } from 'react-router-dom';
 
 export default function SinglePost(props) {
   // console.log(props);  
-  
+    console.log(props)
     const history = useHistory();
     
-    const [post, setPost] = useState({});
+    const [post, setPost] = useState(props.history.location.state.post);
     const [comments, setComments] = useState([])
     const [commentReplies,setCommentReplies] = useState([])
     const [upcolor, setUpColor] = useState("white");
     const [downcolor, setdownColor] = useState("white");
-    setPost(props.history.location.state.post);
-    console.log("post",post)
+    console.log(props.history.location.state.post)
+    
+    
 
     const getComments = () => {
         if(localStorage.getItem('uid')){
-            fetch("http://localhost:3000/comments"/*{postid}*/, {
+            fetch("http://localhost:3000/comments/"+ post._id, {
                mode: "cors",
                headers: {
                 'Accept': 'application/json',
@@ -55,7 +56,7 @@ export default function SinglePost(props) {
                    console.warn(response);
                    response.json().then((result) => {
                        setCommentReplies(result)
-                       console.log(result)
+                       console.log("result",result)
                    });
                  });
             }
@@ -162,11 +163,11 @@ export default function SinglePost(props) {
     //         history.push('/glogin');
     //     }
     //    }
-       console.log(post)
+      //  console.log(post)
        React.useEffect(() => {
           console.log("inside use effect")
           //  getPostDetails(props.history.location.state.post_id);
-          //  getComments();
+           getComments();
            },[]);
 
     return (
@@ -219,6 +220,43 @@ export default function SinglePost(props) {
               {post.createdAt}
             </Card.Footer>
           </Card>
+          <Media variant="dark" bg="dark" className="mt-3">
+  <img
+    width={64}
+    height={64}
+    className="mr-3"
+    src="holder.js/64x64"
+    alt="Generic placeholder"
+  />
+  <Media.Body >
+    <h5>Media Heading</h5>
+    <p>
+      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+      ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+      tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
+      Donec lacinia congue felis in faucibus.
+    </p>
+
+    <Media>
+      <img
+        width={64}
+        height={64}
+        className="mr-3"
+        src="holder.js/64x64"
+        alt="Generic placeholder"
+      />
+      <Media.Body>
+        <h5>Media Heading</h5>
+        <p>
+          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+          scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in
+          vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
+          vulputate fringilla. Donec lacinia congue felis in faucibus.
+        </p>
+      </Media.Body>
+    </Media>
+  </Media.Body>
+</Media>
       </div>
     )
 }
