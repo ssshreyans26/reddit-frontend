@@ -8,22 +8,28 @@ export default function CreatePost() {
     const [image, setImage] = useState();
     const submitFormData = (caption,description,image) => {
         console.log(caption,description,image);
+        let reader = new FileReader()
+
         var data = {
             "caption":caption,
             "description":description,
-            "image":image
+            "image":reader.readAsDataURL(image)
 
         }
         console.log(data)
+        var formData = new FormData();
+        formData.append("caption",caption)
+        formData.append("description",description)
+        formData.append("image",reader.readAsDataURL(image))
         var uid = localStorage.getItem('uid')
-        fetch("https://obscure-journey-24994.herokuapp.com/upload",{  
+        fetch("http://localhost:3000/upload",{  
           method: 'POST', 
           mode: 'cors',
           headers: {
             'Accept': 'application/json',
-            "Access-Control-Allow-Origin": "*",
+            // "Access-Control-Allow-Origin": "*",
           // 'Content-Type': 'application/json',
-            'Content-type': 'multipart/form-data',
+            'Content-Type': 'application-x-www-form-urlencoded',
             'uid': uid
         },
           body: data
@@ -45,7 +51,7 @@ export default function CreatePost() {
       });
     return (
         <div className="container">
-        <Form bg="dark" text="light">
+        <Form bg="dark" text="light" enctype="multipart/form-data">
             
                 <Form.Group as={Col}>
                 <Form.Label>Caption</Form.Label>
