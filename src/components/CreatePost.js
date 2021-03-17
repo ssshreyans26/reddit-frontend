@@ -8,15 +8,6 @@ export default function CreatePost() {
     const [image, setImage] = useState();
     const submitFormData = (caption,description,image) => {
         console.log(caption,description,image);
-        let reader = new FileReader()
-
-        var data = {
-            "caption":caption,
-            "description":description,
-            "image":reader.readAsDataURL(image)
-
-        }
-        console.log(data)
         var formData = new FormData();
         formData.append("caption",caption)
         formData.append("description",description)
@@ -27,9 +18,6 @@ export default function CreatePost() {
           mode: 'cors',
           headers: {
             'Accept': 'application/json',
-            // "Access-Control-Allow-Origin": "*",
-          // 'Content-Type': 'application/json',
-            // 'Content-Type': 'application-x-www-form-urlencoded',
             'uid': uid
         },
           body: formData
