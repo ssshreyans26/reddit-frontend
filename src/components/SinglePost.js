@@ -65,8 +65,12 @@ export default function SinglePost(props) {
         console.warn(response);
         response.json().then((result) => {
           console.warn("result", result);
-          setReplies(result);
+          if(!result.error){
+
+            setReplies(result);
+          }
           console.warn(result)
+          console.log("------------------------------",replies.length)
         });
       });
     } else {
@@ -520,7 +524,7 @@ export default function SinglePost(props) {
           </Card>
         ))
       ) : (
-        <p>No Comments Yet</p>
+        <p>No Replies Yet</p>
       )}
           </Col>
           </Row>
