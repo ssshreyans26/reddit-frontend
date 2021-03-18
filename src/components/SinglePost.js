@@ -12,7 +12,7 @@ export default function SinglePost(props) {
   // console.log(props);
   // console.log(props);
   const history = useHistory();
-  console.log("some console",props.history.location)
+  // console.log("some console",props.history.location)
   const [post, setPost] = useState(props.history.location.state.post);
   const [comment, setComment] = useState([]);
   const [comments, setComments] = useState([]);
