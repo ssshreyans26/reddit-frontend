@@ -98,10 +98,12 @@ export default function Dashboard() {
         
           } else {
             //redirect to singlepost page
+            var data = post
+            data["state"] = votes[post._id]
             history.push({
               pathname:  "/singlepost",
               state: {
-                "post": post 
+                "post": data
               } 
             })
 
@@ -162,7 +164,8 @@ return (
 
             <Card.Body>
               <Card.Title>{post.caption}</Card.Title>
-              <Card.Img variant="top" src={post.Location} />
+              <Card.Img variant="top"                   width={100}
+                  height={100} src={post.Location} />
               <Card.Text>{post.desc}</Card.Text>
               {/* <Button variant="light">Go somewhere</Button> */}
               
