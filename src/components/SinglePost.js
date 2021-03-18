@@ -29,7 +29,7 @@ export default function SinglePost(props) {
   const getComments = () => {
     console.log("inside get Commnets");
     if (localStorage.getItem("uid")) {
-      fetch("http://localhost:3000/comments/" + post._id, {
+      fetch("https://obscure-journey-24994.herokuapp.com/comments/" + post._id, {
         mode: "cors",
         headers: {
           Accept: "application/json",
@@ -54,7 +54,7 @@ export default function SinglePost(props) {
   const getCommentReplies = (comment_id) => {
     if (localStorage.getItem("uid")) {
       var uid = localStorage.getItem("uid")
-      fetch("http://localhost:3000/reply/" + comment_id, {
+      fetch("https://obscure-journey-24994.herokuapp.com/reply/" + comment_id, {
         mode: "cors",
         headers: {
           Accept: "application/json",
@@ -85,7 +85,7 @@ export default function SinglePost(props) {
       var data = {
         content: reply,
       };
-      fetch("http://localhost:3000/postComments/" +post._id+"/"+comment_id, {
+      fetch("https://obscure-journey-24994.herokuapp.com/postComments/" +post._id+"/"+comment_id, {
         mode: "cors",
         method: "POST",
         headers: {
@@ -113,7 +113,7 @@ export default function SinglePost(props) {
     console.log(data);
     var uid = localStorage.getItem("uid");
     if (localStorage.getItem("uid")) {
-      fetch("http://localhost:3000/postComments/" + post._id + "/" + null, {
+      fetch("https://obscure-journey-24994.herokuapp.com/postComments/" + post._id + "/" + null, {
         mode: "cors",
         method: "POST",
         headers: {
@@ -148,7 +148,7 @@ export default function SinglePost(props) {
       //redirect to login page
       history.push("/glogin");
     } else {
-      fetch("http://localhost:3000/votePosts/" + postId, {
+      fetch("https://obscure-journey-24994.herokuapp.com/votePosts/" + postId, {
         method: "POST",
         mode: "cors",
         headers: {
@@ -180,7 +180,7 @@ export default function SinglePost(props) {
       //redirect to login page
       history.push("/glogin");
     } else {
-      fetch("http://localhost:3000/votecomments/" + commentId, {
+      fetch("https://obscure-journey-24994.herokuapp.com/votecomments/" + commentId, {
         method: "POST",
         mode: "cors",
         headers: {
@@ -212,7 +212,7 @@ export default function SinglePost(props) {
       //redirect to login page
       history.push("/glogin");
     } else {
-      fetch("http://localhost:3000/votecomments/" + commentId, {
+      fetch("https://obscure-journey-24994.herokuapp.com/votecomments/" + commentId, {
         method: "POST",
         mode: "cors",
         headers: {
@@ -240,7 +240,7 @@ export default function SinglePost(props) {
   const getPostDetails = () => {
     console.log("you are here");
     if (localStorage.getItem("uid")) {
-      fetch("http://localhost:3000/post/" + post._id, {
+      fetch("https://obscure-journey-24994.herokuapp.com/post/" + post._id, {
         mode: "cors",
         headers: {
           Accept: "application/json",

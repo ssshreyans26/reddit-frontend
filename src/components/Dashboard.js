@@ -32,7 +32,7 @@ export default function Dashboard() {
         history.push("/glogin");
       }
       else {
-        fetch("http://localhost:3000/poststate",{  
+        fetch("https://obscure-journey-24994.herokuapp.com/poststate",{  
             method: 'GET', 
             mode: 'cors',
             headers: {
@@ -65,7 +65,7 @@ export default function Dashboard() {
           history.push("/glogin");
       
         } else {
-          fetch("http://localhost:3000/votePosts/"+ postId,{  
+          fetch("https://obscure-journey-24994.herokuapp.com/votePosts/"+ postId,{  
             method: 'POST', 
             mode: 'cors',
             headers: {
@@ -112,7 +112,7 @@ export default function Dashboard() {
     const getPostDetails = () => {
     var uid = localStorage.getItem('uid');
      console.log("uid",uid) 
-    fetch("http://localhost:3000/feed", {
+    fetch("https://obscure-journey-24994.herokuapp.com/feed", {
         mode: "cors",
         method:"GET",
         headers: {

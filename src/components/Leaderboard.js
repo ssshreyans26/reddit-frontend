@@ -7,7 +7,7 @@ export default function Leaderboard() {
 const [leaderboard,setLeaderboardDetails] = useState([])
 const getLeaderboardData = () => {
 
-    fetch("http://localhost:3000/leaderboard", {
+    fetch("https://obscure-journey-24994.herokuapp.com/leaderboard", {
         mode: "cors",
         method:"GET",
         headers: {

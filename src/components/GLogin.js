@@ -4,7 +4,7 @@ import { GoogleLogin } from 'react-google-login';
 import {Jumbotron} from 'react-bootstrap';
 
 // const gLogin = () => {
-  //     // fetch("http://localhost:3000/auth/google",{  
+  //     // fetch("https://obscure-journey-24994.herokuapp.com/auth/google",{  
     //     // mode: 'cors',
     //     // headers: {
 //     //   'Access-Control-Allow-Origin':'*'
@@ -22,7 +22,7 @@ export default function GLogin(props) {
   const [uid, setUid] = useState("");
   const responseSuccessGoogle = (response) => {
     console.log(response);
-    fetch("http://localhost:3000/login",{  
+    fetch("https://obscure-journey-24994.herokuapp.com/login",{  
       method: 'POST', 
       mode: 'cors',
       headers: {

@@ -10,7 +10,7 @@ export default function Auth() {
             "dob":dob
 
         }
-        fetch("http://localhost:3000/auth/register",{  
+        fetch("https://obscure-journey-24994.herokuapp.com/auth/register",{  
           method: 'POST', 
           mode: 'cors',
           headers: {
