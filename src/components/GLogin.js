@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 import {Jumbotron} from 'react-bootstrap';
-import Header from './Header';
 
 // const gLogin = () => {
   //     // fetch("http://localhost:3000/auth/google",{  
