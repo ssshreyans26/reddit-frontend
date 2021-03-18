@@ -14,8 +14,8 @@ import { useHistory } from 'react-router-dom';
 export default function Dashboard() {
     const history = useHistory()
     const [postDetails, setPostDetails] = useState([]);
-    const [upcolor, setUpColor] = useState("white");
-    const [downcolor, setdownColor] = useState("white");
+   
+    
     const [votes,setVotes] = useState({})
     // const []
     // const upStyle = {
@@ -123,7 +123,7 @@ export default function Dashboard() {
         console.warn(response);
         response.json().then((result) => {
             console.warn(result)
-            if(uid!=="\"\"" || uid=="null" || uid==null){
+            if(uid!=="\"\"" || uid==="null" || uid===null){
               setVotes(result.pop())  
               console.log("votes",votes)
               

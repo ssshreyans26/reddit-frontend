@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table } from "react-bootstrap-table";
+import { Table } from "react-bootstrap";
 
 
 

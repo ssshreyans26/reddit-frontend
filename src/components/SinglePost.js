@@ -15,11 +15,7 @@ export default function SinglePost(props) {
     
     const [post, setPost] = useState(props.history.location.state.post);
     const [comments, setComments] = useState([])
-    const [commentReplies,setCommentReplies] = useState([])
-    const [upcolor, setUpColor] = useState("white");
-    const [downcolor, setdownColor] = useState("white");
-    console.log(props.history.location.state.post)
-    
+    const [commentReplies,setCommentReplies] = useState([])    
     
 
     const getComments = () => {
@@ -225,7 +221,7 @@ export default function SinglePost(props) {
     width={64}
     height={64}
     className="mr-3"
-    src="holder.js/64x64"
+    src=""
     alt="Generic placeholder"
   />
   <Media.Body >
@@ -242,7 +238,7 @@ export default function SinglePost(props) {
         width={64}
         height={64}
         className="mr-3"
-        src="holder.js/64x64"
+        src=""
         alt="Generic placeholder"
       />
       <Media.Body>
