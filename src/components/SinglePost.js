@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Image, Col, Media, Form, Button } from "react-bootstrap";
+import { Card, Image, Col, Media, Form, Button,Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowCircleUp,
@@ -21,9 +21,10 @@ export default function SinglePost(props) {
 
   const [post, setPost] = useState(dataPost);
   const [comment, setComment] = useState([]);
+  const [reply, setReply] = useState();
   const [comments, setComments] = useState([]);
   const [votes,setVotes] = useState({})
-  const [commentReplies, setCommentReplies] = useState([]);
+  const [replies, setReplies] = useState([]);
 
   const getComments = () => {
     console.log("inside get Commnets");
@@ -50,20 +51,22 @@ export default function SinglePost(props) {
       history.push("/glogin");
     }
   };
-  const getCommentReplies = () => {
+  const getCommentReplies = (comment_id) => {
     if (localStorage.getItem("uid")) {
-      fetch("http://localhost:3000/reply" /*{commentid}*/, {
+      var uid = localStorage.getItem("uid")
+      fetch("http://localhost:3000/reply/" + comment_id, {
         mode: "cors",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          uid: localStorage.getItem("uid"),
+          "uid": uid,
         },
       }).then((response) => {
         console.warn(response);
         response.json().then((result) => {
-          setCommentReplies(result);
-          console.log("result", result);
+          console.warn("result", result);
+          setReplies(result);
+          console.warn(result)
         });
       });
     } else {
@@ -71,20 +74,26 @@ export default function SinglePost(props) {
     }
   };
 
-  const postCommentReplies = () => {
+  const postCommentReplies = (comment_id) => {
+
     if (localStorage.getItem("uid")) {
-      fetch("http://localhost:3000/postComments" /*+{postid}/+{commentid}*/, {
+      var uid = localStorage.getItem("uid")
+      var data = {
+        content: reply,
+      };
+      fetch("http://localhost:3000/postComments/" +post._id+"/"+comment_id, {
         mode: "cors",
-        methost: "POST",
+        method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          uid: localStorage.getItem("uid"),
+          "uid": uid,
         },
+        body: JSON.stringify(data),
       }).then((response) => {
         console.warn(response);
         response.json().then((result) => {
-          setCommentReplies(result);
+          // setCommentReplies(result);
           console.log(result);
           //bodu will be content
         });
@@ -106,7 +115,7 @@ export default function SinglePost(props) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          uid: uid,
+          "uid": uid,
         },
         body: JSON.stringify(data),
       }).then((response) => {
@@ -157,6 +166,7 @@ export default function SinglePost(props) {
       });
     }
   };
+
   const updateCommentVote = (commentId, actions) => {
     // console.log(localStorage.getItem("uid"))
     // if(actions==="increment"){
@@ -189,6 +199,40 @@ export default function SinglePost(props) {
     }
   };
 
+  const updateCommentReplyVote = (commentId, actions) => {
+    // console.log(localStorage.getItem("uid"))
+    // if(actions==="increment"){
+    //   setUpColor("green")
+    // }
+    if (!localStorage.getItem("uid")) {
+      //redirect to login page
+      history.push("/glogin");
+    } else {
+      fetch("http://localhost:3000/votecomments/" + commentId, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          uid: localStorage.getItem("uid"),
+        },
+        body: JSON.stringify({ actions: actions }),
+      }).then((result) => {
+        console.warn("you are here");
+        console.log({ result });
+        getComments();
+        // getPostDetails();
+        // result.json().then((rel) => {
+        //   // update icon to green/red
+        // setPost(rel)
+        //   //upadte the number (basically set state again)
+        // });
+      });
+    }
+  };
+
+
+
   const getPostDetails = () => {
     console.log("you are here");
     if (localStorage.getItem("uid")) {
@@ -212,13 +256,14 @@ export default function SinglePost(props) {
   };
   //  console.log(post)
   React.useEffect(() => {
-    console.log("inside use effect");
+    console.log(replies);
     //  getPostDetails(props.history.location.state.post_id);
     getComments();
   }, []);
 
   return (
     <div className="jumbotron">
+
       <Card border="light" bg="dark" text="light">
         <Card.Header as="h4" className="">
           {post.test.length !== 0 ? (
@@ -302,16 +347,17 @@ export default function SinglePost(props) {
               postComments(comment, post);
             }}
           >
-            Submit
+            Add Comments
           </Button>
         </Form.Row>
       </Form>
-
+<Row>
+          <Col md={8}>
       {/* COMMENTS  */}
       {comments.length !== 0 ? (
         comments.map((item, key) => (
-          <Card border="light" bg="secondary" text="light">
-            <Card.Header as="h7" className="">
+          <Card border="light" bg="secondary" text="light" className="">
+            <Card.Header as="h4" className="">
               {item.uid.length !== 0 ? (
                 <Col xs={6} md={6}>
                   {" "}
@@ -364,16 +410,120 @@ export default function SinglePost(props) {
                 className="ml-0"
                 size="2x"
                 icon={faCommentDots}
+                onClick={() => {
+                  getCommentReplies(item._id);
+                }}
               />
             </Card.Body>
-            <Card.Footer className="text-muted text-center">
+            <Card.Footer className="text-center">
               {item.createdAt}
+            <Form bg="dark" text="light">
+        <Form.Row>
+          <Form.Group as={Col}>
+            <Form.Label>
+              {/* <strong>Add Comments</strong> */}
+            </Form.Label>
+            <Form.Control
+              onChange={(e) => setReply(e.target.value)}
+              type="string"
+              placeholder="Enter Reply"
+              required
+            />
+          </Form.Group>
+          <Button
+            variant="dark"
+            className="col-3"
+            onClick={() => {
+              postCommentReplies(item._id);
+            }}
+          >
+            Add Reply
+          </Button>
+        </Form.Row>
+      </Form>
             </Card.Footer>
+
           </Card>
         ))
       ) : (
         <p>No Comments Yet</p>
       )}
+          </Col>
+          <Col md={4}>
+      {/* Replies  */}
+      {replies.length !== 0 ? (
+        replies.map((item, key) => (
+          
+          <Card border="light" bg="secondary" text="light" className="">
+            <Card.Header as="h4" className="">
+              {item.length !== 0 ? (
+                <Col xs={6} md={6}>
+                  {" "}
+                  <Image
+                    width={50}
+                    height={50}
+                    src={item.image}
+                    roundedCircle
+                  />{" "}
+                  {item.displayName}{" "}
+                </Col>
+              ) : (
+                <Col xs={6} md={4}>
+                  {" "}
+                  <Image src="{post.test[0].image}" roundedCircle />{" "}
+                </Col>
+              )}
+            </Card.Header>
+
+            <Card.Body>
+              {/* <Card.Title>{post.caption}</Card.Title> */}
+              {/* <Card.Img variant="top" src="{post.Location}" /> */}
+              <Card.Text>{item.content}</Card.Text>
+              {/* <Button variant="light">Go somewhere</Button> */}
+
+              <FontAwesomeIcon
+                className="mr-1"
+                size="2x"
+                icon={faArrowCircleUp}
+                onClick={() => {
+                  updateCommentReplyVote(item._id, "increment");
+                }}
+                style={{ cursor: "pointer",color:(votes[item._id]===1)
+    ?"green"
+    :"white" }}
+              />
+              <span className="text-center mx-2 mb-2">{item.votes}</span>
+              <FontAwesomeIcon
+                className="mr-1"
+                size="2x"
+                icon={faArrowCircleDown}
+                onClick={() => {
+                  updateCommentReplyVote(item._id, "decrement");
+                }}
+                style={{ cursor: "pointer" ,color:(votes[item._id]===-1)
+    ?"red"
+    :"white"}}
+              />
+              <FontAwesomeIcon
+                className="ml-0"
+                size="2x"
+                icon={faCommentDots}
+                onClick={() => {
+                  getCommentReplies(item._id);
+                }}
+              />
+            </Card.Body>
+            <Card.Footer className="text-center">
+              {item.createdAt}
+            </Card.Footer>
+
+          </Card>
+        ))
+      ) : (
+        <p>No Comments Yet</p>
+      )}
+          </Col>
+          </Row>
     </div>
   );
 }
