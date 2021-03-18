@@ -225,6 +225,7 @@ export default function SinglePost(props) {
         console.warn("you are here");
         console.log({ result });
         getComments();
+        getCommentReplies(commentId);
         // getPostDetails();
         // result.json().then((rel) => {
         //   // update icon to green/red
