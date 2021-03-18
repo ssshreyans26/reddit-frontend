@@ -13,7 +13,12 @@ export default function SinglePost(props) {
   // console.log(props);
   const history = useHistory();
   // console.log("some console",props.history.location)
-  const [post, setPost] = useState(props.history.location.state.post);
+    var dataPost = {}
+  if(props.history.location.state){
+     dataPost = props.history.location.state.post  
+  }
+
+  const [post, setPost] = useState(dataPost);
   const [comment, setComment] = useState([]);
   const [comments, setComments] = useState([]);
   const [commentReplies, setCommentReplies] = useState([]);
@@ -85,6 +90,7 @@ export default function SinglePost(props) {
     var data = {
       "content": com
     }
+    console.log(data)
     var uid = localStorage.getItem("uid");
     if (localStorage.getItem("uid")) {
       fetch("http://localhost:3000/postComments/" + post._id + "/" + null, {
@@ -100,6 +106,7 @@ export default function SinglePost(props) {
         console.warn(response);
         response.json().then((result) => {
           //  setComments(result)
+          getPostDetails();
           console.log(result);
         });
       });
@@ -137,29 +144,29 @@ export default function SinglePost(props) {
     }
   };
 
-  // const getPostDetails = (postid) => {
-  //     console.log("you are here")
-  //     if(localStorage.getItem('uid')){
+  const getPostDetails = () => {
+      console.log("you are here")
+      if(localStorage.getItem('uid')){
 
-  //         fetch("http://localhost:3000/post/"+postid, {
-  //            mode: "cors",
-  //            headers: {
-  //             'Accept': 'application/json',
-  //             'Content-Type': 'application/json',
-  //             'uid':localStorage.getItem('uid')
-  //            },
-  //          }).then((response) => {
-  //            console.warn(response);
-  //            response.json().then((result) => {
-  //                setPost(result)
-  //                console.log(post)
-  //            });
-  //          });
-  //     }
-  //     else {
-  //         history.push('/glogin');
-  //     }
-  //    }
+          fetch("http://localhost:3000/post/"+post._id, {
+             mode: "cors",
+             headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'uid':localStorage.getItem('uid')
+             },
+           }).then((response) => {
+             console.warn(response);
+             response.json().then((result) => {
+                 setPost(result)
+                 console.log(post)
+             });
+           });
+      }
+      else {
+          history.push('/glogin');
+      }
+     }
   //  console.log(post)
   React.useEffect(() => {
     console.log("inside use effect");
