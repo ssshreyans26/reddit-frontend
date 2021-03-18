@@ -24,6 +24,7 @@ export default function SinglePost(props) {
   const [commentReplies, setCommentReplies] = useState([]);
 
   const getComments = () => {
+    console.log("inside get Commnets")
     if (localStorage.getItem("uid")) {
       fetch("http://localhost:3000/comments/" + post._id, {
         mode: "cors",
@@ -35,6 +36,7 @@ export default function SinglePost(props) {
       }).then((response) => {
         console.warn(response);
         response.json().then((result) => {
+          var voteComments = result.pop()
           setComments(result);
           console.log(result);
         });
@@ -86,7 +88,7 @@ export default function SinglePost(props) {
       history.push("/glogin");
     }
   };
-  const postComments = (com) => {
+  const postComments = (com,pos) => {
     var data = {
       "content": com
     }
@@ -103,11 +105,16 @@ export default function SinglePost(props) {
         },
         body: JSON.stringify(data),
       }).then((response) => {
-        console.warn(response);
+        // console.warn(response.data);
         response.json().then((result) => {
           //  setComments(result)
-          getPostDetails();
-          console.log(result);
+          var test = comments
+          // console.log(comments)
+          test.push(result)
+          setPost(pos)
+          // setComments(test)
+          getComments();
+          console.log(comments)
         });
       });
     } else {
@@ -177,7 +184,7 @@ export default function SinglePost(props) {
   return (
     <div className="jumbotron" >
       <Card border="light" bg="dark" text="light">
-        <Card.Header as="h7" className="">
+        <Card.Header as="h4" className="">
           {post.test.length !== 0 ? (
             <Col xs={6} md={6}>
               {" "}
@@ -248,10 +255,9 @@ export default function SinglePost(props) {
           </Form.Group>
           <Button
             variant="dark"
-            type="submit"
             className="col-3"
             onClick={() => {
-              postComments(comment);
+              postComments(comment,post);
             }}
           >
             Submit
