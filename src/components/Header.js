@@ -18,7 +18,7 @@ export default function Header() {
       <Nav.Link>Create Post</Nav.Link>
       </LinkContainer>
       <LinkContainer to="/singlepost">
-      <Nav.Link>Single Post</Nav.Link>
+      <Nav.Link></Nav.Link>
       </LinkContainer>
       <LinkContainer to="/glogin">
       <Nav.Link className="ml-auto"></Nav.Link>
