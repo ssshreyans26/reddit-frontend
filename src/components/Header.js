@@ -23,6 +23,9 @@ export default function Header() {
       <LinkContainer to="/glogin">
       <Nav.Link className="ml-auto">Sign In</Nav.Link>
       </LinkContainer>
+      <LinkContainer to="/leaderboard">
+      <Nav.Link className="ml-auto">LeaderBoard</Nav.Link>
+      </LinkContainer>
     </Nav>
   </Navbar.Collapse>
 </Navbar>

@@ -11,6 +11,7 @@ function App() {
       <Link to="/createpost">Create Post</Link>
       <Link to="/glogin">Google Login</Link>
       <Link to="/auth">Auth</Link>
+      <Link to="/leaderboard">Leaderboard</Link>
       <Link to="/singlepost">Single Post</Link>
       </BrowserRouter>
     </div>

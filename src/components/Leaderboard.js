@@ -6,8 +6,7 @@ import { Table } from "react-bootstrap-table";
 export default function Leaderboard() {
 const [leaderboard,setLeaderboardDetails] = useState()
 const getLeaderboardData = () => {
-    var uid = localStorage.getItem('uid');
-     console.log("uid",uid) 
+
     fetch("http://localhost:3000/leaderboard", {
         mode: "cors",
         method:"GET",
@@ -15,7 +14,6 @@ const getLeaderboardData = () => {
           "Access-Control-Allow-Origin": "*",
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'uid':uid
         },
       }).then((response) => {
         console.warn(response);
