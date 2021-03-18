@@ -36,6 +36,7 @@ export default function GLogin(props) {
         // return  this.props.history.push('/auth/');
         // redirectToAuth();
         setUid(rel.user._id);
+        localStorage.setItem('uid', JSON.stringify(rel.user._id));
         console.log(uid)
         if(rel.firstLogin===1){
           history.push('/auth');
@@ -56,7 +57,7 @@ export default function GLogin(props) {
     
   }
   React.useEffect(() => {
-    localStorage.setItem('uid', JSON.stringify(uid));
+    // localStorage.setItem('uid', JSON.stringify(uid));
   });
   
   const responseErrorGoogle = (response) => {
