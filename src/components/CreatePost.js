@@ -6,7 +6,7 @@ export default function CreatePost() {
     const [caption, setCaption] = useState("");
     const [description, setDescription] = useState("");
     const [image, setImage] = useState();
-    const [show, setShow] = useState(true);
+    const [show, setShow] = useState(false);
     const submitFormData = (caption,description,image) => {
         console.log(caption,description,image);
 

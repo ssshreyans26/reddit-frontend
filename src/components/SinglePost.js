@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Image, Col, Form, Button, Row } from "react-bootstrap";
+import { Card, Image, Col, Form, Button, Row,Alert } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowCircleUp,
@@ -17,7 +17,7 @@ export default function SinglePost(props) {
   if (props.history.location.state) {
     dataPost = props.history.location.state.post;
   }
-
+  const [show, setShow] = useState(false);
   const [post, setPost] = useState(dataPost);
   const [comment, setComment] = useState([]);
   const [reply, setReply] = useState();
@@ -110,7 +110,9 @@ export default function SinglePost(props) {
         console.warn(response);
         response.json().then((result) => {
           getCommentReplies(comment_id);
+          setShow(true)
           console.log(result);
+
           //bodu will be content
         });
       });
@@ -537,14 +539,22 @@ export default function SinglePost(props) {
                       color: replyVotes[item._id] === -1 ? "red" : "white",
                     }}
                   />
-                  <FontAwesomeIcon
-                    className="ml-0"
-                    size="2x"
-                    icon={faCommentDots}
-                    onClick={() => {
-                      getCommentReplies(item._id);
-                    }}
-                  />
+                  <>
+      <Alert show={show} variant="success">
+        <Alert.Heading>Reply Added</Alert.Heading>
+        <p>
+        Your Reply to the Comment was successfully added !
+        </p>
+        <hr />
+        <div className="d-flex justify-content-end">
+          <Button onClick={() => setShow(false)} variant="outline-success">
+          Close
+          </Button>
+        </div>
+      </Alert>
+
+
+    </>
                 </Card.Body>
                 <Card.Footer className="text-center">
                   {item.createdAt}

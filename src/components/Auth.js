@@ -5,6 +5,7 @@ export default function Auth() {
   const history = useHistory()
     const [username, setUsername] = useState("");
     const [dob, setDob] = useState("");
+
     const submitFormData = (username,dob) => {
         console.log(username,dob);
         var data = {
