@@ -23,6 +23,7 @@ export default function SinglePost(props) {
   const [reply, setReply] = useState();
   const [comments, setComments] = useState([]);
   const [votes, setVotes] = useState({});
+  const [replyVotes, setReplyVotes] = useState({});
   const [replies, setReplies] = useState([]);
 
   const getComments = () => {
@@ -62,14 +63,18 @@ export default function SinglePost(props) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          uid: uid,
+          "uid": uid,
         },
       }).then((response) => {
         console.warn(response);
         response.json().then((result) => {
           console.warn("result", result);
           if (!result.error) {
+            setReplyVotes(result.pop())
             setReplies(result);
+          }
+          else if(replies.length===0){
+            setReplies([])
           }
           console.warn(result);
           console.log("------------------------------", replies.length);
@@ -104,7 +109,7 @@ export default function SinglePost(props) {
       ).then((response) => {
         console.warn(response);
         response.json().then((result) => {
-          // setCommentReplies(result);
+          getCommentReplies(comment_id);
           console.log(result);
           //bodu will be content
         });
@@ -131,7 +136,7 @@ export default function SinglePost(props) {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            uid: uid,
+            "uid": uid,
           },
           body: JSON.stringify(data),
         }
@@ -219,31 +224,34 @@ export default function SinglePost(props) {
     }
   };
 
-  const updateCommentReplyVote = (commentId, actions) => {
+  const updateCommentReplyVote = (replyId,commentId, actions) => {
+    console.warn("replyID",replyId)
+    console.warn("commentID",commentId)
+    console.log("inside updateCommentReplyVote")
     // console.log(localStorage.getItem("uid"))
     // if(actions==="increment"){
     //   setUpColor("green")
-    // }
+    var uid = localStorage.getItem("uid")
     if (!localStorage.getItem("uid")) {
       //redirect to login page
       history.push("/glogin");
     } else {
       fetch(
-        "https://obscure-journey-24994.herokuapp.com/votecomments/" + commentId,
+        "https://obscure-journey-24994.herokuapp.com/votecomments/" + replyId,
         {
           method: "POST",
           mode: "cors",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            uid: localStorage.getItem("uid"),
+            "uid": uid,
           },
           body: JSON.stringify({ actions: actions }),
         }
       ).then((result) => {
         console.warn("you are here");
         console.log({ result });
-        getComments();
+        // getComments();
         getCommentReplies(commentId);
         // getPostDetails();
         // result.json().then((rel) => {
@@ -281,6 +289,7 @@ export default function SinglePost(props) {
     console.log(replies);
     //  getPostDetails(props.history.location.state.post_id);
     getComments();
+    getCommentReplies(replies.parentId);
   }, []);
 
   return (
@@ -507,12 +516,13 @@ export default function SinglePost(props) {
                     size="2x"
                     icon={faArrowCircleUp}
                     onClick={() => {
-                      updateCommentReplyVote(item._id, "increment");
+                      updateCommentReplyVote(item._id, item.parentId,"increment");
                     }}
                     style={{
                       cursor: "pointer",
-                      color: votes[item._id] === 1 ? "green" : "white",
+                      color: replyVotes[item._id] === 1 ? "green" : "white",
                     }}
+                    
                   />
                   <span className="text-center mx-2 mb-2">{item.votes}</span>
                   <FontAwesomeIcon
@@ -520,11 +530,11 @@ export default function SinglePost(props) {
                     size="2x"
                     icon={faArrowCircleDown}
                     onClick={() => {
-                      updateCommentReplyVote(item._id, "decrement");
+                      updateCommentReplyVote(item._id, item.parentId,"decrement");
                     }}
                     style={{
                       cursor: "pointer",
-                      color: votes[item._id] === -1 ? "red" : "white",
+                      color: replyVotes[item._id] === -1 ? "red" : "white",
                     }}
                   />
                   <FontAwesomeIcon
