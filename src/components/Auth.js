@@ -1,6 +1,8 @@
 import React, { useState }  from 'react'
 import { Form,Button,Col } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 export default function Auth() {
+  const history = useHistory()
     const [username, setUsername] = useState("");
     const [dob, setDob] = useState("");
     const submitFormData = (username,dob) => {
@@ -22,6 +24,8 @@ export default function Auth() {
         }).then((result) => {        
           result.json().then((rel) => {
               console.log(rel)
+              history.push('/')
+
           });
         });
         

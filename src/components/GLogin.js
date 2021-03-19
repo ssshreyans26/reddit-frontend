@@ -42,13 +42,8 @@ export default function GLogin(props) {
           history.push('/auth');
         }
         else{
-          if(props.history.location.state){
-
-            history.push(props.history.location.state.api)
-          }
-          else{
             history.push('/')
-          }
+          
         }
         console.warn(rel);
         // return rel;

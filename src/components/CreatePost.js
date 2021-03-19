@@ -1,11 +1,12 @@
 import React,{useState} from 'react'
-import { Form,Button,Col } from 'react-bootstrap';
+import { Form,Button,Col,Alert } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 export default function CreatePost() {
     const history = useHistory()
     const [caption, setCaption] = useState("");
     const [description, setDescription] = useState("");
     const [image, setImage] = useState();
+    const [show, setShow] = useState(true);
     const submitFormData = (caption,description,image) => {
         console.log(caption,description,image);
 
@@ -25,6 +26,7 @@ export default function CreatePost() {
         }).then((result) => {        
           result.json().then((rel) => {
               console.log(rel)
+              setShow(true)
           });
         });
         
@@ -54,9 +56,25 @@ export default function CreatePost() {
                 </Form.Group>
              <Form.Control className="mb-2 mr-3" type="file" onChange={(e) => setImage(e.target.files[0])} />
             <Button onClick={() =>{submitFormData(caption,description,image)}} variant="dark">
-                Submit
+                Create Post
             </Button>
         </Form>
+        <>
+      <Alert show={show} variant="success">
+        <Alert.Heading>New Post Created</Alert.Heading>
+        <p>
+        Please Click on the Button Below to create a new post.
+        </p>
+        <hr />
+        <div className="d-flex justify-content-end">
+          <Button onClick={() => setShow(false)} variant="outline-success">
+          Create Another Post
+          </Button>
+        </div>
+      </Alert>
+
+
+    </>
         </div>
     )
 }
