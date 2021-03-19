@@ -30,13 +30,13 @@ const getLeaderboardData = () => {
         },[]);
 
 return (
-        <div>
+        <div className="container mt-5">
         <Table striped bordered hover variant="dark">
   <thead>
     <tr>
       <th>Ranks</th>
-      <th>Image</th>
-      <th>Display Name</th>
+      {/* <th>Image</th> */}
+      <th>Profile</th>
       <th>Karma</th>
       <th></th>
     </tr>
@@ -44,15 +44,16 @@ return (
   <tbody>
   {leaderboard.map((item,key) => (
     <tr>
-      <td>{key}</td>
+      <td>{key+1}</td>
       <td>              
         <Image
+        className="mr-2"
                 width={50}
                 height={50}
                 src={item.image}
                 roundedCircle
-              /></td>
-      <td>{item.displayName}</td>
+              />
+      {item.displayName}</td>
       <td>{item.karma}</td>
     </tr>
   ))}

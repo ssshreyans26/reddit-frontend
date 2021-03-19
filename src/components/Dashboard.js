@@ -149,7 +149,7 @@ return (
   
 
           <Card border="light" bg="dark" text="light" className="card-o" >
-            <Card.Header as="h3" >
+            <Card.Header as="h6" >
               {post.test.length !== 0 ? (
                 <Col xs={6} md={6} className="col-o">
                   {" "}

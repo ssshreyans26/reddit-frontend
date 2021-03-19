@@ -13,6 +13,7 @@ function App() {
       <Link to="/auth">Auth</Link>
       <Link to="/leaderboard">Leaderboard</Link>
       <Link to="/singlepost">Single Post</Link>
+      <Link to="/profile">Profile</Link>
       </BrowserRouter>
     </div>
   );

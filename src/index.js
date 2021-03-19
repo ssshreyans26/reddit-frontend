@@ -11,6 +11,7 @@ import Auth from './components/Auth'
 import SinglePost from './components/SinglePost'
 import Header from './components/Header';
 import Leaderboard from './components/Leaderboard';
+import Profile from './components/Profile'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -23,6 +24,7 @@ ReactDOM.render(
       <Route path="/glogin" component={GLogin}/>
       <Route path="/createpost" component={CreatePost}/>
       <Route path="/leaderboard" component={Leaderboard}/>
+      <Route path="/profile" component={Profile}/>
         
       </Switch>
     </Router>
