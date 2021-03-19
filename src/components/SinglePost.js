@@ -539,7 +539,19 @@ export default function SinglePost(props) {
                       color: replyVotes[item._id] === -1 ? "red" : "white",
                     }}
                   />
-                  <>
+
+                </Card.Body>
+                <Card.Footer className="text-center">
+                  {item.createdAt}
+                </Card.Footer>
+              </Card>
+            ))
+          ) : (
+            <p>No Replies Yet</p>
+          )}
+        </Col>
+      </Row>
+      <>
       <Alert show={show} variant="success">
         <Alert.Heading>Reply Added</Alert.Heading>
         <p>
@@ -555,17 +567,6 @@ export default function SinglePost(props) {
 
 
     </>
-                </Card.Body>
-                <Card.Footer className="text-center">
-                  {item.createdAt}
-                </Card.Footer>
-              </Card>
-            ))
-          ) : (
-            <p>No Replies Yet</p>
-          )}
-        </Col>
-      </Row>
     </div>
   );
 }
