@@ -1,0 +1,54 @@
+.header-img {
+  width: 50px;
+  height: 50px;
+  margin-right: 12px;
+}
+
+.col-o {
+  padding: 0;
+}
+
+.card-body-o {
+  padding: .75rem 1.25rem;
+  padding-top: 0;
+}
+
+.button-flex {
+  width: 115px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.button-flex span {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.upvote:hover {
+  color: #FF4500 !important;
+  cursor: pointer;
+}
+
+.downvote:hover {
+  color: #7193FF !important;
+  cursor: pointer;
+}
+
+.card-o {
+  width: 60vw;
+  margin: 0 auto;
+  border: solid 0.5px #505050 !important;
+  margin-top: 20px;
+  background-color: #1A1A1B !important;
+}
+
+.card-o:hover {
+  border: solid 0.5px #bdbdbd !important;
+}
+/*# sourceMappingURL=dashboard.css.map */

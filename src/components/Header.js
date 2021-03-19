@@ -1,10 +1,11 @@
 import React from 'react';
 import {Navbar, Nav} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
+import "../css/header.css";
 
 export default function Header() {
     return (
-      <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
+      <Navbar bg="dark"  className="header"   variant="dark" expand="lg" sticky="top">
             <LinkContainer to="/">
   <Navbar.Brand>Anonymous</Navbar.Brand>
   </LinkContainer>
@@ -18,10 +19,10 @@ export default function Header() {
       <Nav.Link>Create Post</Nav.Link>
       </LinkContainer>
       <LinkContainer to="/singlepost">
-      <Nav.Link></Nav.Link>
+      <Nav.Link>Single Post</Nav.Link>
       </LinkContainer>
       <LinkContainer to="/glogin">
-      <Nav.Link className="ml-auto">Sign In</Nav.Link>
+      <Nav.Link className="ml-auto"></Nav.Link>
       </LinkContainer>
       <LinkContainer to="/leaderboard">
       <Nav.Link className="ml-auto">LeaderBoard</Nav.Link>

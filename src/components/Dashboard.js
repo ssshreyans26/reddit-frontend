@@ -3,10 +3,12 @@ import { Card, Image, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowCircleUp,
+  faArrowUp,
   faArrowCircleDown,
   faCommentDots,
 } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from 'react-router-dom';
+import "../css/dashboard.css";
 
 
 
@@ -146,57 +148,60 @@ return (
 
   
 
-          <Card border="light" bg="dark" text="light">
-            <Card.Header as="h3" className="">
+          <Card border="light" bg="dark" text="light" className="card-o" >
+            <Card.Header as="h3" >
               {post.test.length !== 0 ? (
-                <Col xs={6} md={6}>
+                <Col xs={6} md={6} className="col-o">
                   {" "}
-                  <Image src={post.test[0].image} roundedCircle />{" "}
+                  <Image   className="header-img"  src={post.test[0].image} roundedCircle />{" "}
                   {post.test[0].displayName}{" "}
                 </Col>
               ) : (
-                <Col xs={6} md={4}>
+                <Col xs={6} md={4} className="col-o" >
                   {" "}
                   <Image src="{post.test[0].image}" roundedCircle />{" "}
                 </Col>
               )}
             </Card.Header>
 
-            <Card.Body>
+            <Card.Body  className="card-body-o">
               <Card.Title>{post.caption}</Card.Title>
-              <Card.Img variant="top"                   width={100}
-                  height={100} src={post.Location} />
+              <Card.Img variant="top"                  
+                   src={post.Location} />
               <Card.Text>{post.desc}</Card.Text>
               {/* <Button variant="light">Go somewhere</Button> */}
               
-              <FontAwesomeIcon
-                className="mr-1"
-                size="2x"
+                <div  className="button-flex"  >
+                <FontAwesomeIcon
+                className="mr-1 fa-lg upvote"
+                size="fa-lg"
                 icon={faArrowCircleUp}
                 onClick={() => {updateVote(post._id,"increment")}}
                 style={{cursor:"pointer",color:(votes[post._id]===1)
-    ?"green"
+    ?"#FF4500"
     :"white"   
   }}
               />
-              <span className="text-center mx-2 mb-2">{post.votes}</span>
+              <span className="text-center mx-2 mb-2 ">{post.votes}</span>
               <FontAwesomeIcon
-                className="mr-1"
-                size="2x"
+                className="mr-1 fa-lg downvote"
+                size=""
                 icon={faArrowCircleDown}
                 onClick={() => {updateVote(post._id,"decrement")}}
                 style={{cursor:"pointer",color:(votes[post._id]===-1)
-    ?"red"
+    ?"#7193FF"
     :"white"}}
               />
               <FontAwesomeIcon
                 
-                className="ml-0"
-                size="2x"
+                className="ml-0 fa-lg"
+                size=""
                 icon={faCommentDots}
                 style={{cursor:"pointer"}}
                 onClick={() => {addComments(post)}}
               />
+
+                </div>
             </Card.Body>
             <Card.Footer className="text-muted text-center">
               {post.createdAt}
@@ -206,5 +211,3 @@ return (
       </div>
     )
 }
-
-
