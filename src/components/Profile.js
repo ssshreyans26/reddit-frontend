@@ -92,7 +92,7 @@ import "../css/profile.css";
 					</div>
 					<div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 						<div className="form-group">
-							
+							<p></p>
 							{/* <Input.label for="fullName">Full Name</Input.label>
 							<Input type="text" className="form-control" id="fullName" placeholder="Enter full name"/> */}
 						</div>
