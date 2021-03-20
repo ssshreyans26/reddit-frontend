@@ -38,7 +38,7 @@ return (
       {/* <th>Image</th> */}
       <th>Profile</th>
       <th>Karma</th>
-      <th></th>
+      
     </tr>
   </thead>
   <tbody>

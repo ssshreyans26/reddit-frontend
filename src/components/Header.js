@@ -1,12 +1,28 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {Navbar, Nav} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 import "../css/header.css";
+import { useHistory } from "react-router-dom";
 
 export default function Header() {
+  const [login,setLogin] = useState(localStorage.getItem("uid")!==null)
+  const history = useHistory()
+ const signOut = () => {
+  localStorage.clear();
+  setLogin(localStorage.getItem("uid")!==null)
+  history.push('/')
+ }
+
+ React.useEffect(() => {
+  console.log("you are inside use effect")
+  setLogin(localStorage.getItem("uid")!==null)
+},[]);
+
+
+ 
     return (
-      <Navbar bg="dark"  className="header"   variant="dark" expand="lg" sticky="top">
-            <LinkContainer to="/">
+    <Navbar bg="dark"  className="header"   variant="dark" expand="lg" sticky="top">
+    <LinkContainer to="/">
   <Navbar.Brand>Anonymous</Navbar.Brand>
   </LinkContainer>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -27,8 +43,11 @@ export default function Header() {
       <LinkContainer to="/profile">
       <Nav.Link className="ml-auto">Profile</Nav.Link>
       </LinkContainer>
-      {(localStorage.getItem("uid"))
-     ? <LinkContainer to="/glogout">
+      {(login)
+     ? <LinkContainer to=""             
+              onClick={() => {
+              signOut();
+            }}>
       <Nav.Link className="ml-auto">Sign Out</Nav.Link>
       </LinkContainer>
     :<LinkContainer to="/glogin">
@@ -40,3 +59,4 @@ export default function Header() {
 </Navbar>
     )
 }
+
