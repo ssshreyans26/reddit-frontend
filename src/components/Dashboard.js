@@ -144,11 +144,11 @@ export default function Dashboard() {
 return (
       <div className="">
      
-        {postDetails.map((post) => (
+        {postDetails.map((post,key) => (
 
   
 
-          <Card border="light" bg="dark" text="light" className="card-o" >
+          <Card border="light" bg="dark" text="light" className="card-o" key={key} >
             <Card.Header as="h6" >
               {post.test.length !== 0 ? (
                 <Col xs={6} md={6} className="col-o">
@@ -174,7 +174,7 @@ return (
                 <div  className="button-flex"  >
                 <FontAwesomeIcon
                 className="mr-1 fa-lg upvote"
-                size="fa-lg"
+                
                 icon={faArrowCircleUp}
                 onClick={() => {updateVote(post._id,"increment")}}
                 style={{cursor:"pointer",color:(votes[post._id]===1)
@@ -185,7 +185,7 @@ return (
               <span className="text-center mx-2 mb-2 ">{post.votes}</span>
               <FontAwesomeIcon
                 className="mr-1 fa-lg downvote"
-                size=""
+                
                 icon={faArrowCircleDown}
                 onClick={() => {updateVote(post._id,"decrement")}}
                 style={{cursor:"pointer",color:(votes[post._id]===-1)
@@ -195,7 +195,7 @@ return (
               <FontAwesomeIcon
                 
                 className="ml-0 fa-lg"
-                size=""
+                
                 icon={faCommentDots}
                 style={{cursor:"pointer"}}
                 onClick={() => {addComments(post)}}

@@ -7,6 +7,7 @@ import {
   faCommentDots,
 } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
+import "../css/dashboard.css";
 
 export default function SinglePost(props) {
   // console.log(props);
@@ -295,17 +296,18 @@ export default function SinglePost(props) {
   }, []);
 
   return (
-    <div className="jumbotron">
-      <Card border="light" bg="dark" text="light">
+    <div className="">
+      <Card border="light" bg="dark" text="light" className="card-o">
         <Card.Header as="h4" className="">
           {post.test.length !== 0 ? (
-            <Col xs={6} md={6}>
+            <Col xs={6} md={6} className="col-o">
               {" "}
               <Image
                 width={50}
                 height={50}
                 src={post.test[0].image}
                 roundedCircle
+                className="header-img"
               />{" "}
               {post.test[0].displayName}{" "}
             </Col>
@@ -317,15 +319,15 @@ export default function SinglePost(props) {
           )}
         </Card.Header>
 
-        <Card.Body>
+        <Card.Body className="card-body-o">
           <Card.Title>{post.caption}</Card.Title>
           {/* <Card.Img variant="top" src="{post.Location}" /> */}
           <Card.Text>{post.desc}</Card.Text>
           {/* <Button variant="light">Go somewhere</Button> */}
 
           <FontAwesomeIcon
-            className="mr-1"
-            size="2x"
+            className="mr-1 fa-lg upvote"
+            
             icon={faArrowCircleUp}
             onClick={() => {
               updateVote(post._id, "increment");
@@ -337,8 +339,8 @@ export default function SinglePost(props) {
           />
           <span className="text-center mx-2 mb-2">{post.votes}</span>
           <FontAwesomeIcon
-            className="mr-1"
-            size="2x"
+            className="mr-1 fa-lg downvote"
+            
             icon={faArrowCircleDown}
             onClick={() => {
               updateVote(post._id, "decrement");
@@ -361,7 +363,7 @@ export default function SinglePost(props) {
       </Card>
       <Form bg="dark" text="light">
         <Form.Row>
-          <Form.Group as={Col}>
+          <Form.Group className="card-o">
             <Form.Label>
               <strong>Add Comments</strong>
             </Form.Label>
@@ -371,24 +373,24 @@ export default function SinglePost(props) {
               placeholder="Enter Comments"
               required
             />
-          </Form.Group>
           <Button
             variant="dark"
-            className="col-3"
+            className=""
             onClick={() => {
               postComments(comment, post);
             }}
           >
             Add Comments
           </Button>
+          </Form.Group>
         </Form.Row>
       </Form>
       <Row>
-        <Col md={8}>
+        <Col>
           {/* COMMENTS  */}
           {comments.length !== 0 ? (
             comments.map((item, key) => (
-              <Card border="light" bg="secondary" text="light" className="">
+              <Card border="light" bg="secondary" text="light" className="card-o">
                 <Card.Header as="h4" className="">
                   {item.uid.length !== 0 ? (
                     <Col xs={6} md={6}>
@@ -409,15 +411,15 @@ export default function SinglePost(props) {
                   )}
                 </Card.Header>
 
-                <Card.Body>
+                <Card.Body className="card-body-o">
                   {/* <Card.Title>{post.caption}</Card.Title> */}
                   {/* <Card.Img variant="top" src="{post.Location}" /> */}
                   <Card.Text>{item.content}</Card.Text>
                   {/* <Button variant="light">Go somewhere</Button> */}
 
                   <FontAwesomeIcon
-                    className="mr-1"
-                    size="2x"
+                    className="mr-1 fa-lg upvote"
+                    
                     icon={faArrowCircleUp}
                     onClick={() => {
                       updateCommentVote(item._id, "increment");
@@ -429,8 +431,8 @@ export default function SinglePost(props) {
                   />
                   <span className="text-center mx-2 mb-2">{item.votes}</span>
                   <FontAwesomeIcon
-                    className="mr-1"
-                    size="2x"
+                    className="mr-1 fa-lg downvote"
+                    
                     icon={faArrowCircleDown}
                     onClick={() => {
                       updateCommentVote(item._id, "decrement");
@@ -441,8 +443,8 @@ export default function SinglePost(props) {
                     }}
                   />
                   <FontAwesomeIcon
-                    className="ml-0"
-                    size="2x"
+                    className="ml-0 fa-lg"
+                    
                     icon={faCommentDots}
                     onClick={() => {
                       getCommentReplies(item._id);
@@ -482,11 +484,11 @@ export default function SinglePost(props) {
             <p>No Comments Yet</p>
           )}
         </Col>
-        <Col md={4}>
+        <Col>
           {/* Replies  */}
           {replies.length !== 0 ? (
             replies.map((item, key) => (
-              <Card border="light" bg="secondary" text="light" className="">
+              <Card border="light" bg="secondary" text="light" className="card-o">
                 <Card.Header as="h4" className="">
                   {item.length !== 0 ? (
                     <Col xs={6} md={6}>
@@ -507,15 +509,15 @@ export default function SinglePost(props) {
                   )}
                 </Card.Header>
 
-                <Card.Body>
+                <Card.Body className="card-body-o">
                   {/* <Card.Title>{post.caption}</Card.Title> */}
                   {/* <Card.Img variant="top" src="{post.Location}" /> */}
                   <Card.Text>{item.content}</Card.Text>
                   {/* <Button variant="light">Go somewhere</Button> */}
 
                   <FontAwesomeIcon
-                    className="mr-1"
-                    size="2x"
+                    className="mr-1 fa-lg upvote"
+                    
                     icon={faArrowCircleUp}
                     onClick={() => {
                       updateCommentReplyVote(item._id, item.parentId,"increment");
@@ -528,8 +530,8 @@ export default function SinglePost(props) {
                   />
                   <span className="text-center mx-2 mb-2">{item.votes}</span>
                   <FontAwesomeIcon
-                    className="mr-1"
-                    size="2x"
+                    className="mr-1 fa-lg downvote"
+                    
                     icon={faArrowCircleDown}
                     onClick={() => {
                       updateCommentReplyVote(item._id, item.parentId,"decrement");
