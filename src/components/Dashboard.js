@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Image, Col } from "react-bootstrap";
+import { Card, Image, Col,Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowCircleUp,
@@ -18,7 +18,7 @@ export default function Dashboard() {
     const history = useHistory()
     const [postDetails, setPostDetails] = useState([]);
     // const [createdAt,setCreatedAt] = useState()
-    
+    const [sort,setSort] = useState("")
     const [votes,setVotes] = useState({})
     // const []
     // const upStyle = {
@@ -135,10 +135,11 @@ export default function Dashboard() {
       }
     }
     const getPostDetails = () => {
+      var action;
       console.log("Uor are Inside get Post")
     var uid = localStorage.getItem('uid');
      console.log("uid",uid) 
-    fetch("https://obscure-journey-24994.herokuapp.com/post", {
+    fetch("https://obscure-journey-24994.herokuapp.com/post?action="+sort, {
         mode: "cors",
         method:"GET",
         headers: {
@@ -172,7 +173,15 @@ export default function Dashboard() {
 
 return (
       <div className="">
-     
+      <Button variant="primary" onClick={() => {
+        setSort("top")
+        getPostDetails()}}>Trending</Button>{' '}
+  <Button variant="secondary" onClick={() => {
+        setSort("recent")
+        getPostDetails()}}>Recent</Button>{' '}
+  <Button variant="success" onClick={() => {
+        setSort("old")
+        getPostDetails()}}>Old</Button>{' '}
         {postDetails.map((post,key) => (
 
   

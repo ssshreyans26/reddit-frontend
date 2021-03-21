@@ -60,14 +60,17 @@ export default function CreatePost() {
             </Button>
         </Form>
         <>
-      <Alert show={show} variant="success">
+      <Alert show={show} variant="danger" className="mt-4">
         <Alert.Heading>New Post Created</Alert.Heading>
         <p>
         Please Click on the Button Below to create a new post.
         </p>
         <hr />
         <div className="d-flex justify-content-end">
-          <Button onClick={() => setShow(false)} variant="outline-success">
+        <Button onClick={() => history.push('/')} variant="outline-success" className="mr-2">
+          Go to Dashboard
+          </Button>
+          <Button onClick={() => setShow(false)} variant="outline-danger">
           Create Another Post
           </Button>
         </div>

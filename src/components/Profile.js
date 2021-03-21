@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Image,Button} from 'react-bootstrap';
+import { Card, Image,Button,Form} from 'react-bootstrap';
 import "../css/profile.css";
 
 
@@ -30,6 +30,7 @@ import "../css/profile.css";
 	export default function Profile() {
 	const [ createdAt,setCreatedAt] = useState()
 	const [profileInfo,setProfileInfo] = useState(null)
+	const [badgeName,setBadgeName] = useState("")
     const getProfileInfo = () => {
 		console.log("here")
         var uid = localStorage.getItem('uid')
@@ -45,11 +46,33 @@ import "../css/profile.css";
               console.log(rel)
 			  setProfileInfo(rel)
 				if(profileInfo!==null){
+					
 					var d = new Date(profileInfo[0].createdAt)
 					setCreatedAt(d.toUTCString())
-
-					
+					var name;
+					if(profileInfo[0]<100){
+						name = "Noob"
+						profileInfo[0].badge = 0
+					}
+					else if(profileInfo[0]<200){
+						profileInfo[0].badge = 1
+						name = "Contributor"
+					}
+					else if(profileInfo[0]<300){
+						profileInfo[0].badge = 2
+						name = "Regular Contributor"
+					}
+					else if(profileInfo[0]<400){
+						profileInfo[0].badge = 3
+						name = "Great Contributor"
+					}
+					else if(profileInfo[0]>=400){
+						profileInfo[0].badge = 4
+						name = "Ace Contributor"
+					}
 					// setCreatedAt(d)
+					console.log("name",name)
+					setBadgeName(name)
 				}
 
           });
@@ -92,18 +115,28 @@ import "../css/profile.css";
 					</div>
 					<div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 						<div className="form-group">
-							<p></p>
-							{/* <Input.label for="fullName">Full Name</Input.label>
-							<Input type="text" className="form-control" id="fullName" placeholder="Enter full name"/> */}
+							<Form.Label for="fullName">First Name</Form.Label>
+							<Form.Control type="text" className="form-control" id="fullName" placeholder={profileInfo[0].firstName}/> 
 						</div>
 					</div>
 					<div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 						<div className="form-group">
-							{/* <Input.label for="eMail">Email</Input.label>
-							<Input type="email" className="form-control" id="eMail" placeholder="Enter email ID"/> */}
+						<Form.Label for="fullName">Last Name</Form.Label>
+							<Form.Control type="text" className="form-control" id="fullName" placeholder={profileInfo[0].lastName}/> 
 						</div>
 					</div>
-
+					<div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+						<div className="form-group">
+							<Form.Label for="fullName">Karma Points</Form.Label>
+							<h6 className="mb-3 text-primary">{profileInfo[0].karma}</h6>
+						</div>
+					</div>
+					<div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+						<div className="form-group">
+						<Form.Label for="fullName">Badge</Form.Label>
+						<h6 className="mb-3 text-primary">{profileInfo[0].badge} - {badgeName}</h6>
+						</div>
+					</div>
 					</div>
 				</div>
 
