@@ -6,6 +6,7 @@ import {
   faArrowUp,
   faArrowCircleDown,
   faCommentDots,
+  faTrashAlt
 } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from 'react-router-dom';
 import "../css/dashboard.css";
@@ -111,7 +112,30 @@ export default function Dashboard() {
 
           }
         };
+
+    const deletePost = (post_id) => {
+      if(localStorage.getItem("uid")){
+        var uid = localStorage.getItem("uid");
+        fetch("https://obscure-journey-24994.herokuapp.com/post/"+post_id,{
+          mode: "cors",
+          method:"DELETE",
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'uid':uid
+          },
+        }).then((response) => {
+          console.warn(response);
+          // response.json().then((result) => {
+              // console.warn(result)
+              getPostDetails();
+          // });
+        })
+      }
+    }
     const getPostDetails = () => {
+      console.log("Uor are Inside get Post")
     var uid = localStorage.getItem('uid');
      console.log("uid",uid) 
     fetch("https://obscure-journey-24994.herokuapp.com/post", {
@@ -205,6 +229,17 @@ return (
                 style={{cursor:"pointer"}}
                 onClick={() => {addComments(post)}}
               />
+              {(localStorage.getItem("uid")===`"`+post.uid+`"`)
+              ?<FontAwesomeIcon
+                
+                className="ml-0 fa-lg"
+                
+                icon={faTrashAlt}
+                style={{cursor:"pointer"}}
+                onClick={() => {deletePost(post._id)}}
+              />
+              : <p></p>
+              }
 
                 </div>
             </Card.Body>
