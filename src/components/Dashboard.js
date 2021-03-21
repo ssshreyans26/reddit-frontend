@@ -16,7 +16,7 @@ import "../css/dashboard.css";
 export default function Dashboard() {
     const history = useHistory()
     const [postDetails, setPostDetails] = useState([]);
-   
+    // const [createdAt,setCreatedAt] = useState()
     
     const [votes,setVotes] = useState({})
     // const []
@@ -67,7 +67,7 @@ export default function Dashboard() {
           history.push("/glogin");
       
         } else {
-          fetch("https://obscure-journey-24994.herokuapp.com/votePosts/"+ postId,{  
+          fetch("https://obscure-journey-24994.herokuapp.com/post/vote/"+ postId,{  
             method: 'POST', 
             mode: 'cors',
             headers: {
@@ -114,7 +114,7 @@ export default function Dashboard() {
     const getPostDetails = () => {
     var uid = localStorage.getItem('uid');
      console.log("uid",uid) 
-    fetch("https://obscure-journey-24994.herokuapp.com/feed", {
+    fetch("https://obscure-journey-24994.herokuapp.com/post", {
         mode: "cors",
         method:"GET",
         headers: {
@@ -131,6 +131,11 @@ export default function Dashboard() {
               setVotes(result.pop())  
               console.log("votes",votes)
               
+            }
+            for(let i=0;i<result.length;i++){
+              
+              var d = new Date(result[i].createdAt)
+              result[i].createdAt = d.toUTCString()
             }
             setPostDetails(result)
             console.log(postDetails)
@@ -153,7 +158,7 @@ return (
               {post.test.length !== 0 ? (
                 <Col xs={6} md={6} className="col-o">
                   {" "}
-                  <Image   className="header-img"  src={post.test[0].image} roundedCircle />{" "}
+                  <Image className="header-img"  src={post.test[0].image} roundedCircle />{" "}
                   {post.test[0].displayName}{" "}
                 </Col>
               ) : (

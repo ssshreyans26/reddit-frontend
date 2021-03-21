@@ -30,14 +30,16 @@ export default function SinglePost(props) {
   const getComments = () => {
     console.log("inside get Commnets");
     if (localStorage.getItem("uid")) {
+      var uid = localStorage.getItem("uid")
       fetch(
-        "https://obscure-journey-24994.herokuapp.com/comments/" + post._id,
+        "https://obscure-journey-24994.herokuapp.com/comment/" + post._id,
         {
           mode: "cors",
+          method:"GET",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            uid: localStorage.getItem("uid"),
+            "uid": uid,
           },
         }
       ).then((response) => {
@@ -45,6 +47,11 @@ export default function SinglePost(props) {
         response.json().then((result) => {
           if (result.length > 0) {
             setVotes(result.pop());
+            for(let i=0;i<result.length;i++){
+              
+              var d = new Date(result[i].createdAt)
+              result[i].createdAt = d.toUTCString()
+            }
             setComments(result);
           }
 
@@ -59,7 +66,7 @@ export default function SinglePost(props) {
     console.log("you are inside comment replies");
     if (localStorage.getItem("uid")) {
       var uid = localStorage.getItem("uid");
-      fetch("https://obscure-journey-24994.herokuapp.com/reply/" + comment_id, {
+      fetch("https://obscure-journey-24994.herokuapp.com/comment/" + post._id+"/"+ comment_id, {
         mode: "cors",
         headers: {
           Accept: "application/json",
@@ -72,9 +79,15 @@ export default function SinglePost(props) {
           console.warn("result", result);
           if (!result.error) {
             setReplyVotes(result.pop())
+            for(let i=0;i<result.length;i++){
+              
+              var d = new Date(result[i].createdAt)
+              result[i].createdAt = d.toUTCString()
+            }
             setReplies(result);
           }
-          else if(replies.length===0){
+
+          else if(result.error){
             setReplies([])
           }
           console.warn(result);
@@ -90,13 +103,12 @@ export default function SinglePost(props) {
     if (localStorage.getItem("uid")) {
       var uid = localStorage.getItem("uid");
       var data = {
-        content: reply,
+        "content": reply,
+        "postId":post._id,
+        "parentId":comment_id
       };
       fetch(
-        "https://obscure-journey-24994.herokuapp.com/postComments/" +
-          post._id +
-          "/" +
-          comment_id,
+        "https://obscure-journey-24994.herokuapp.com/comment/" ,
         {
           mode: "cors",
           method: "POST",
@@ -123,16 +135,15 @@ export default function SinglePost(props) {
   };
   const postComments = (com, pos) => {
     var data = {
-      content: com,
+      "content": com,
+      "postId":post._id,
+      "parentId":"null"
     };
     console.log(data);
-    var uid = localStorage.getItem("uid");
+    var uid = localStorage.getItem("uid"); 
     if (localStorage.getItem("uid")) {
       fetch(
-        "https://obscure-journey-24994.herokuapp.com/postComments/" +
-          post._id +
-          "/" +
-          null,
+        "https://obscure-journey-24994.herokuapp.com/comment/",
         {
           mode: "cors",
           method: "POST",
@@ -169,7 +180,7 @@ export default function SinglePost(props) {
       //redirect to login page
       history.push("/glogin");
     } else {
-      fetch("https://obscure-journey-24994.herokuapp.com/votePosts/" + postId, {
+      fetch("https://obscure-journey-24994.herokuapp.com/post/vote" + postId, {
         method: "POST",
         mode: "cors",
         headers: {
@@ -197,21 +208,23 @@ export default function SinglePost(props) {
     // if(actions==="increment"){
     //   setUpColor("green")
     // }
+    console.log("Inside Update Comment Vote")
     if (!localStorage.getItem("uid")) {
       //redirect to login page
       history.push("/glogin");
     } else {
+      var uid = localStorage.getItem("uid")
       fetch(
-        "https://obscure-journey-24994.herokuapp.com/votecomments/" + commentId,
+        "https://obscure-journey-24994.herokuapp.com/comment/vote/" + commentId,
         {
           method: "POST",
           mode: "cors",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            uid: localStorage.getItem("uid"),
+            "uid": uid,
           },
-          body: JSON.stringify({ actions: actions }),
+          body: JSON.stringify({ "actions": actions }),
         }
       ).then((result) => {
         console.warn("you are here");
@@ -240,7 +253,7 @@ export default function SinglePost(props) {
       history.push("/glogin");
     } else {
       fetch(
-        "https://obscure-journey-24994.herokuapp.com/votecomments/" + replyId,
+        "https://obscure-journey-24994.herokuapp.com/comment/vote/" + replyId,
         {
           method: "POST",
           mode: "cors",
@@ -488,7 +501,7 @@ export default function SinglePost(props) {
           {/* Replies  */}
           {replies.length !== 0 ? (
             replies.map((item, key) => (
-              <Card border="light" bg="secondary" text="light" className="card-o">
+              <Card border="light" bg="secondary" text="light" className="card-o" key={key}>
                 <Card.Header as="h4" className="">
                   {item.length !== 0 ? (
                     <Col xs={6} md={6}>
@@ -496,15 +509,15 @@ export default function SinglePost(props) {
                       <Image
                         width={50}
                         height={50}
-                        src={item.image}
+                        src={item.uid.image}
                         roundedCircle
                       />{" "}
-                      {item.displayName}{" "}
+                      {item.uid.displayName}{" "}
                     </Col>
                   ) : (
                     <Col xs={6} md={4}>
                       {" "}
-                      <Image src="{post.test[0].image}" roundedCircle />{" "}
+                      <Image src={item.uid.image} roundedCircle />{" "}
                     </Col>
                   )}
                 </Card.Header>

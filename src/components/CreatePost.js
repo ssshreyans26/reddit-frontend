@@ -15,7 +15,7 @@ export default function CreatePost() {
         formData.append("description",description)
         formData.append("image",image)
         var uid = localStorage.getItem('uid')
-        fetch("https://obscure-journey-24994.herokuapp.com/upload",{  
+        fetch("https://obscure-journey-24994.herokuapp.com/post",{  
           method: 'POST', 
           mode: 'cors',
           headers: {
