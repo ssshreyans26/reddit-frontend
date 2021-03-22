@@ -60,11 +60,41 @@ export default function GLogin(props) {
   }
   return (
     
-    <div class="col-md-3">
-    <Jumbotron>
+    <div class="container" style={{
+      display: "block",
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 100,
+      color: 'white',
+      backgroundColor: 'black'
+    }}>
+      <h1 style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          color: 'red'
+        }}>Welcome!</h1>
+      <br></br>
+      <br></br>
+      <h3 style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}>- SignIn or Sign up -</h3>
+        <p style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}>using</p>
+    <Jumbotron style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: 'black'
+        }}>
   <GoogleLogin
     clientId="143507902217-1tlo2o3f38t402n736r1hbnk8j2da655.apps.googleusercontent.com"
-    buttonText="Login"
+    buttonText="SignIn / SignUp"
     onSuccess={responseSuccessGoogle}
     onFailure={responseErrorGoogle}
     cookiePolicy={'single_host_origin'}

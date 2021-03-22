@@ -150,7 +150,7 @@ import "../css/profile.css";
 			</div>
 		</div>
 	</div>
-	:<p>Loding profile Info</p>
+	:<h3>Loading profile Info</h3>
 			}
 	</div>
 
