@@ -173,15 +173,26 @@ export default function Dashboard() {
 
 return (
       <div className="">
-      <Button variant="primary" onClick={() => {
+        <div className="text-center mt-4" style={{
+          display: "block",
+          justifyContent: "center",
+          alignItems: "center"
+        }}>
+      <Button variant="primary" 
+
+      onClick={() => {
         setSort("top")
         getPostDetails()}}>Trending</Button>{' '}
-  <Button variant="secondary" onClick={() => {
+  <Button variant="secondary" 
+
+  onClick={() => {
         setSort("recent")
         getPostDetails()}}>Recent</Button>{' '}
-  <Button variant="success" onClick={() => {
+  <Button variant="success" 
+
+  onClick={() => {
         setSort("old")
-        getPostDetails()}}>Old</Button>{' '}
+        getPostDetails()}}>Old</Button>{' '}</div>
         {postDetails.map((post,key) => (
 
   

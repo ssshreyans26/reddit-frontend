@@ -51,8 +51,10 @@ import "../css/profile.css";
 					setCreatedAt(d.toUTCString())
 					var name;
 					if(profileInfo[0]<100){
+
 						name = "Noob"
 						profileInfo[0].badge = 0
+						console.log(name)
 					}
 					else if(profileInfo[0]<200){
 						profileInfo[0].badge = 1
@@ -93,7 +95,7 @@ import "../css/profile.css";
 				<div className="account-settings">
 					<div className="user-profile">
 						<div className="user-avatar">
-							<Image src={profileInfo[0].image} alt="Maxwell Admin"/>
+							<Image src={profileInfo[0].image} alt="Profile_Picture"/>
 						</div>
 						<h5 className="user-name">{profileInfo[0].displayName}</h5>
 						<h6 className="user-email">{profileInfo[0].email}</h6>
@@ -116,14 +118,14 @@ import "../css/profile.css";
 					<div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 						<div className="form-group">
 							<Form.Label for="fullName">First Name</Form.Label>
-							<Form.Control type="text" className="form-control" id="fullName" placeholder={profileInfo[0].firstName}/> 
+							<h6 className="mb-3 text-primary">{profileInfo[0].firstName}</h6> 
 						</div>
 					</div>
 					<div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 						<div className="form-group">
 						<Form.Label for="fullName">Last Name</Form.Label>
-							<Form.Control type="text" className="form-control" id="fullName" placeholder={profileInfo[0].lastName}/> 
-						</div>
+						<h6 className="mb-3 text-primary">{profileInfo[0].lastName}</h6> 
+					</div>
 					</div>
 					<div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
 						<div className="form-group">
