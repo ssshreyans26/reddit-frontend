@@ -43,38 +43,44 @@ import "../css/profile.css";
         },
         }).then((result) => {        
           result.json().then((rel) => {
-              console.log(rel)
+			  console.log(rel)
+			  var name;
+			  if(rel[0].karma<100){
+						
+				name = "Noob"
+				rel[0].badge = 0
+				console.log(name)
+			}
+			else if(rel[0].karma<200){
+				rel[0].badge = 1
+				name = "Contributor"
+			}
+			else if(rel[0].karma<300){
+				rel[0].badge = 2
+				name = "Regular Contributor"
+			}
+			else if(rel[0].karma<400){
+				rel[0].badge = 3
+				name = "Great Contributor"
+			}
+			else if(rel[0].karma>=400){
+				rel[0].badge = 4
+				name = "Ace Contributor"
+			}
+			// setCreatedAt(d)
+			// console.log("name",name)
+			setBadgeName(name)
+
+
+
+
 			  setProfileInfo(rel)
 				if(profileInfo!==null){
 					
 					var d = new Date(profileInfo[0].createdAt)
 					setCreatedAt(d.toUTCString())
-					var name;
-					if(profileInfo[0]<100){
-
-						name = "Noob"
-						profileInfo[0].badge = 0
-						console.log(name)
-					}
-					else if(profileInfo[0]<200){
-						profileInfo[0].badge = 1
-						name = "Contributor"
-					}
-					else if(profileInfo[0]<300){
-						profileInfo[0].badge = 2
-						name = "Regular Contributor"
-					}
-					else if(profileInfo[0]<400){
-						profileInfo[0].badge = 3
-						name = "Great Contributor"
-					}
-					else if(profileInfo[0]>=400){
-						profileInfo[0].badge = 4
-						name = "Ace Contributor"
-					}
-					// setCreatedAt(d)
-					console.log("name",name)
-					setBadgeName(name)
+					console.log(profileInfo[0].karma)
+					
 				}
 
           });
@@ -136,18 +142,20 @@ import "../css/profile.css";
 					<div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
 						<div className="form-group">
 						<Form.Label for="fullName">Badge</Form.Label>
-						<h6 className="mb-3 text-primary">{profileInfo[0].badge} - {badgeName}</h6>
+						<h6 className="mb-3 text-primary">{profileInfo[0].badge}</h6>
+
 						</div>
 					</div>
 					</div>
 				</div>
 
-				</div>
 				<div className="row gutters">
 					<div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-						<div className="text-right">
+						<div className="text-center">
+						<h2 className="mb-3 text-danger">{badgeName}</h2>
 						</div>
 					</div>
+				</div>
 				</div>
 			</div>
 		</div>
