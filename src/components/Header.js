@@ -21,7 +21,7 @@ export default function Header() {
 
  
     return (
-    <Navbar bg="dark"  className="header"   variant="dark" expand="lg" sticky="top">
+    <Navbar bg="dark"  className="header" variant="dark" expand="lg" sticky="top">
     <LinkContainer to="/">
   <Navbar.Brand>Anonymous</Navbar.Brand>
   </LinkContainer>

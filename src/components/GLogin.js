@@ -42,7 +42,9 @@ export default function GLogin(props) {
           history.push('/auth');
         }
         else{
-            history.push('/')
+          window.location.href = '/'
+          // history.push('/')
+
           
         }
         console.warn(rel);
