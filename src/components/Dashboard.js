@@ -18,7 +18,7 @@ export default function Dashboard() {
     const history = useHistory()
     const [postDetails, setPostDetails] = useState([]);
     // const [createdAt,setCreatedAt] = useState()
-    const [sort,setSort] = useState("")
+    // const [sort,setSort] = useState("")
     const [votes,setVotes] = useState({})
     // const []
     // const upStyle = {
@@ -80,7 +80,7 @@ export default function Dashboard() {
           }).then((result) => {
             console.warn("you are here")
             console.log({result})
-            getPostDetails();
+            getPostDetails("");
             // result.json().then((rel) => {
             //   // update icon to green/red
             //   //upadte the number (basically set state again)
@@ -129,12 +129,16 @@ export default function Dashboard() {
           console.warn(response);
           // response.json().then((result) => {
               // console.warn(result)
-              getPostDetails();
+              getPostDetails("");
           // });
         })
       }
     }
-    const getPostDetails = () => {
+
+    const getSort = (action) => {
+      
+    }
+    const getPostDetails = (sort) => {
       var action;
       console.log("Uor are Inside get Post")
     var uid = localStorage.getItem('uid');
@@ -168,7 +172,7 @@ export default function Dashboard() {
       });
     }
     React.useEffect(() => {
-        getPostDetails();
+        getPostDetails("");
         },[]);
 
 return (
@@ -181,18 +185,18 @@ return (
       <Button variant="primary" 
 
       onClick={() => {
-        setSort("top")
-        getPostDetails()}}>Trending</Button>{' '}
+
+        getPostDetails("top")}}>Trending</Button>{' '}
   <Button variant="secondary" 
 
   onClick={() => {
-        setSort("recent")
-        getPostDetails()}}>Recent</Button>{' '}
+
+        getPostDetails("recent")}}>Recent</Button>{' '}
   <Button variant="success" 
 
   onClick={() => {
-        setSort("old")
-        getPostDetails()}}>Old</Button>{' '}</div>
+
+        getPostDetails("old")}}>Old</Button>{' '}</div>
         {postDetails.map((post,key) => (
 
   
