@@ -180,7 +180,7 @@ export default function SinglePost(props) {
       //redirect to login page
       history.push("/glogin");
     } else {
-      fetch("https://obscure-journey-24994.herokuapp.com/post/vote" + postId, {
+      fetch("https://obscure-journey-24994.herokuapp.com/post/vote/" + postId, {
         method: "POST",
         mode: "cors",
         headers: {
